@@ -1,0 +1,5 @@
+.project
+.gitignore.swp
+.cupAntBuilder.launch
+.classpath
+bin/
