@@ -6,6 +6,7 @@
 package cup.example;
 
 import java_cup.runtime.*;
+import java.util.*;
 import cup.example.Lexer;
 import java.io.IOException;
 import java.io.File;
@@ -32,28 +33,54 @@ scan with {: return lexer.next_token(); :};
 
 /* Terminals (tokens returned by the scanner). */
 terminal            SEMI, PLUS, MINUS, UMINUS, TIMES, LPAREN, RPAREN;
-terminal Integer    NUMBER;        // our scanner provides numbers as integers
+terminal Integer    NUMBER;        // our scanner provides numbers as integersterminal			VAR;4
+terminal			VAR, COLON, COMMA, CONST;
+terminal			BOOL, INT, CHAR;
+terminal			EQUAL;
+terminal String     IDENTIFIER;
+terminal			NEWLINE;
 
 /* Non terminals */
-non terminal            expr_list;
-non terminal Integer    expr;      // used to store evaluated subexpressions
-
-/* Precedences */
+non terminal              exp_list;
+non terminal 		      exp;
+non terminal			  exp_part;
+non terminal			  variable_def, variable_def_list, variable_def_part, variable_opt_nl;
+non terminal              const_def, const_def_list, const_def_part;
+non terminal List<String> identifier_list;
+non terminal String   	  identifier;
+non terminal			  type_def;
+non terminal		      attr;
+/* Precedences */ 
 precedence left PLUS, MINUS;
 precedence left TIMES;
 precedence left UMINUS;
 
+start with const_def_part; // mudar esse start para a cabeça da regra que está trabalhando
+// TODO (GABRIEL): adicionar regra principal que deriva as outras principais 
+
 /* The grammar rules */
-expr_list ::= expr_list expr:e SEMI         {: System.out.println(e); :}
-            | expr:e SEMI                   {: System.out.println(e); :}
-            ;
-            
-expr      ::= expr:e1 PLUS  expr:e2         {: RESULT = e1+e2;        :}
-             | expr:e1 MINUS expr:e2        {: RESULT = e1-e2;        :}
-             | expr:e1 TIMES expr:e2        {: RESULT = e1*e2;        :}
-             | MINUS expr:e                 {: RESULT = -e;           :}
-             %prec UMINUS
-             | LPAREN expr:e RPAREN	         {: RESULT = e;           :}
-             | NUMBER:n	                     {: RESULT = n;           :}
-             ;
-       
+
+const_def_part ::= CONST const_def_list;
+const_def_list ::= const_def_list const_def | const_def;
+const_def ::= identifier_list COLON type_def EQUAL; //ADD LITERAL
+
+identifier ::= IDENTIFIER:x;
+
+exp_list ::= exp_list exp_part | exp_part;
+exp_part ::= exp SEMI;
+exp ::= 
+	  exp PLUS exp
+	| exp TIMES exp
+	| exp MINUS exp
+	| NUMBER;
+
+variable_def_part ::= VAR variable_opt_nl;
+variable_opt_nl ::= NEWLINE variable_def_list variable_opt_nl; 
+variable_def_list ::= variable_def_list variable_def | variable_def;
+variable_def ::= identifier_list COLON type_def SEMI;
+
+attr ::= EQUAL exp SEMI; 
+
+identifier_list ::= identifier_list COMMA identifier | identifier;
+
+type_def ::= CHAR | BOOL | INT;
