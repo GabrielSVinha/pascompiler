@@ -59,13 +59,47 @@ Whitespace = [ \t\f] | {Newline}
 Number     = [0-9]+
 
 /* comments */
-Comment = {TraditionalComment} | {EndOfLineComment}
-TraditionalComment = "/*" {CommentContent} \*+ "/"
-EndOfLineComment = "//" [^\r\n]* {Newline}
-CommentContent = ( [^*] | \*+[^*/] )*
 
 ident = ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )*
 
+Identifier = [a-zA-Z_][a-zA-Z_0-9]*
+
+RealNumber = [0-9]+"."[0-9]+
+
+DigSeq = [0-9]+
+
+NQUOTE = [^']
+
+CharacterString = '({NQUOTE}|'')+' | ''
+
+Comment = "(*" [^*] ~"*)" | "{" [^*] ~"}"
+
+A = [aA]
+B = [bB]
+C = [cC]
+D = [dD]
+E = [eE]
+F = [fF]
+G = [gG]
+H = [hH]
+I = [iI]
+J = [jJ]
+K = [kK]
+L = [lL]
+M = [mM]
+N = [nN]
+O = [oO]
+P = [pP]
+Q = [qQ]
+R = [rR]
+S = [sS]
+T = [tT]
+U = [uU]
+V = [vV]
+W = [wW]
+X = [xX]
+Y = [yY]
+Z = [zZ]
 
 %eofval{
     return symbolFactory.newSymbol("EOF",sym.EOF);
@@ -77,15 +111,25 @@ ident = ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )*
 
 <YYINITIAL> {
 
-  {Whitespace} {                              }
-  ";"          { return symbolFactory.newSymbol("SEMI", SEMI); }
-  "+"          { return symbolFactory.newSymbol("PLUS", PLUS); }
-  "-"          { return symbolFactory.newSymbol("MINUS", MINUS); }
-  "*"          { return symbolFactory.newSymbol("TIMES", TIMES); }
-  "n"          { return symbolFactory.newSymbol("UMINUS", UMINUS); }
-  "("          { return symbolFactory.newSymbol("LPAREN", LPAREN); }
-  ")"          { return symbolFactory.newSymbol("RPAREN", RPAREN); }
-  {Number}     { return symbolFactory.newSymbol("NUMBER", NUMBER, Integer.parseInt(yytext())); }
+  {Whitespace}    {                              }
+  ";"             { return symbolFactory.newSymbol("SEMI", SEMI); }
+  "+"             { return symbolFactory.newSymbol("PLUS", PLUS); }
+  "-"             { return symbolFactory.newSymbol("MINUS", MINUS); }
+  "*"             { return symbolFactory.newSymbol("TIMES", TIMES); }
+  "n"             { return symbolFactory.newSymbol("UMINUS", UMINUS); }
+  "("             { return symbolFactory.newSymbol("LPAREN", LPAREN); }
+  ")"             { return symbolFactory.newSymbol("RPAREN", RPAREN); }
+  {Number}        { return symbolFactory.newSymbol("NUMBER", NUMBER, Integer.parseInt(yytext())); }
+  {V}{A}{R}       { return symbolFactory.newSymbol("VAR", VAR); }
+  {C}{O}{N}{S}{T} { return symbolFactory.newSymbol("CONST", CONST); }
+  "char"          { return symbolFactory.newSymbol("CHAR", CHAR); }
+  "integer"       { return symbolFactory.newSymbol("INT", INT); }
+  "boolean"       { return symbolFactory.newSymbol("BOOL", BOOL); }
+  ":"             { return symbolFactory.newSymbol("COLON", COLON); }
+  ","		      { return symbolFactory.newSymbol("COMMA", COMMA); }
+  "="		      { return symbolFactory.newSymbol("EQUAL", EQUAL); }
+  {Identifier}    { return symbolFactory.newSymbol("IDENTIFIER", IDENTIFIER, yytext()); }
+  {Newline}       { return symbolFactory.newSymbol("NEWLINE", NEWLINE); } 
 }
 
 

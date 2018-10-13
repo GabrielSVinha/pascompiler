@@ -1,1 +1,4 @@
-27+15;
+var
+  age, year, grade : integer;
+  LetterGrade : char;
+  DidYouFail : boolean;
