@@ -51,36 +51,41 @@ non terminal String   	  identifier;
 non terminal			  type_def;
 non terminal		      attr;
 /* Precedences */ 
+precedence nonassoc NEWLINE;	// Inserted by Eclipse plugin
 precedence left PLUS, MINUS;
 precedence left TIMES;
 precedence left UMINUS;
 
-start with const_def_part; // mudar esse start para a cabeça da regra que está trabalhando
+start with variable_def_part; // mudar esse start para a cabeça da regra que está trabalhando
 // TODO (GABRIEL): adicionar regra principal que deriva as outras principais 
 
 /* The grammar rules */
 
 const_def_part ::= CONST const_def_list;
-const_def_list ::= const_def_list const_def | const_def;
-const_def ::= identifier_list COLON type_def EQUAL; //ADD LITERAL
+const_def_list ::= const_def_list const_def; 
+const_def_list ::= const_def;
+const_def ::= identifier_list COLON type_def EQUAL exp_list; //ADD LITERAL
 
 identifier ::= IDENTIFIER:x;
 
-exp_list ::= exp_list exp_part | exp_part;
+exp_list ::= exp_list exp_part;
+exp_list ::= exp_part;
 exp_part ::= exp SEMI;
-exp ::= 
-	  exp PLUS exp
-	| exp TIMES exp
-	| exp MINUS exp
-	| NUMBER;
+exp ::= exp PLUS exp;
+exp ::= exp TIMES exp;
+exp ::= exp MINUS exp;
+exp ::= LPAREN exp RPAREN;
+exp ::= NUMBER;
 
-variable_def_part ::= VAR variable_opt_nl;
-variable_opt_nl ::= NEWLINE variable_def_list variable_opt_nl; 
-variable_def_list ::= variable_def_list variable_def | variable_def;
+variable_def_part ::= VAR variable_def_list;
+variable_def_list ::= variable_def_list variable_def;
+variable_def_list ::= NEWLINE variable_def_list;
+variable_def_list ::= variable_def;
 variable_def ::= identifier_list COLON type_def SEMI;
 
-attr ::= EQUAL exp SEMI; 
+identifier_list ::= identifier_list COMMA identifier; 
+identifier_list ::= identifier;
 
-identifier_list ::= identifier_list COMMA identifier | identifier;
-
-type_def ::= CHAR | BOOL | INT;
+type_def ::= CHAR;
+type_def ::= BOOL;
+type_def ::= INT;
