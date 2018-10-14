@@ -25,20 +25,20 @@ public interface sym {
   public static final int COMMA = 12;
   public static final int EOF = 0;
   public static final int NUMBER = 9;
+  public static final int DIVIDE = 5;
   public static final int NEWLINE = 20;
   public static final int MINUS = 4;
   public static final int CONST = 13;
   public static final int error = 1;
   public static final int BOOL = 14;
   public static final int VAR = 10;
-  public static final int UMINUS = 5;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
   "SEMI",
   "PLUS",
   "MINUS",
-  "UMINUS",
+  "DIVIDE",
   "TIMES",
   "LPAREN",
   "RPAREN",

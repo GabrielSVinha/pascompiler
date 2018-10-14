@@ -32,7 +32,7 @@ init with {:
 scan with {: return lexer.next_token(); :};
 
 /* Terminals (tokens returned by the scanner). */
-terminal            SEMI, PLUS, MINUS, UMINUS, TIMES, LPAREN, RPAREN;
+terminal            SEMI, PLUS, MINUS, DIVIDE, TIMES, LPAREN, RPAREN;
 terminal Integer    NUMBER;        // our scanner provides numbers as integersterminal			VAR;4
 terminal			VAR, COLON, COMMA, CONST;
 terminal			BOOL, INT, CHAR;
@@ -42,6 +42,7 @@ terminal			NEWLINE, PROGRAM, BEGIN, END;
 
 /* Non terminals */
 non terminal              initial, program_def_part, body_def_part;
+non terminal              stmt_def_part, stmt_def_list, stmt;
 non terminal              exp_list;
 non terminal 		      exp;
 non terminal			  exp_part;
@@ -50,24 +51,30 @@ non terminal              const_def, const_def_list, const_def_part;
 non terminal List<String> identifier_list;
 non terminal String   	  identifier;
 non terminal			  type_def;
-non terminal		      attr;
+non terminal		      attr, assign_operator, equal_op, sum_op, minus_op, times_op, divide_op;
 /* Precedences */ 
+precedence nonassoc VAR;	// Inserted by Eclipse plugin
 precedence nonassoc NEWLINE;	// Inserted by Eclipse plugin
 precedence left PLUS, MINUS;
 precedence left TIMES;
-precedence left UMINUS;
+precedence left DIVIDE;
 
-start with initial; // mudar esse start para a cabeça da regra que está trabalhando
-// TODO (GABRIEL): adicionar regra principal que deriva as outras principais 
-
+start with initial;
 /* The grammar rules */
 
 initial ::= program_def_part variable_def_part body_def_part;
 
 program_def_part ::= PROGRAM identifier SEMI;
 
-body_def_part ::= BEGIN /*LIST OF STATEMENTS*/ END FULLSTOP;
-body_def_part ::= /*LIST OF STATEMENTS*/ END FULLSTOP;
+body_def_part ::= BEGIN stmt_def_part END FULLSTOP;
+body_def_part ::= stmt_def_part END FULLSTOP;
+
+stmt_def_part ::= stmt_def_list | ;
+stmt_def_list ::= stmt_def_list stmt;
+stmt_def_list ::= stmt;
+stmt_def_list ::= NEWLINE stmt_def_list;
+stmt ::= attr SEMI;
+
 
 const_def_part ::= CONST const_def_list;
 const_def_list ::= const_def_list const_def; 
@@ -76,14 +83,15 @@ const_def ::= identifier_list COLON type_def EQUAL exp_list; //ADD LITERAL
 
 identifier ::= IDENTIFIER:x;
 
-exp_list ::= exp_list exp_part;
 exp_list ::= exp_part;
-exp_part ::= exp SEMI;
+exp_part ::= exp_part exp; 
+exp_part ::= exp;
 exp ::= exp PLUS exp;
 exp ::= exp TIMES exp;
 exp ::= exp MINUS exp;
 exp ::= LPAREN exp RPAREN;
 exp ::= NUMBER;
+exp ::= identifier;
 
 variable_def_part ::= VAR variable_def_list | ;
 variable_def_list ::= variable_def_list variable_def;
@@ -91,7 +99,19 @@ variable_def_list ::= NEWLINE variable_def_list;
 variable_def_list ::= variable_def;
 variable_def ::= identifier_list COLON type_def SEMI;
 
-attr ::= identifier COLON EQUAL exp_list;
+attr ::= identifier assign_operator exp_list;
+
+assign_operator ::= equal_op;
+assign_operator ::= sum_op;
+assign_operator ::= minus_op;
+assign_operator ::= times_op;
+assign_operator ::= divide_op; 
+
+equal_op ::= COLON EQUAL;
+sum_op  ::= PLUS EQUAL;
+minus_op  ::= MINUS EQUAL;
+times_op ::= TIMES EQUAL;
+divide_op ::= DIVIDE EQUAL;
 
 identifier_list ::= identifier_list COMMA identifier; 
 identifier_list ::= identifier;
