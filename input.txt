@@ -1,2 +1,4 @@
 Program aaa;
+begin
+X -= 2;y /= 2;
 End.

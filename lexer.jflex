@@ -116,16 +116,16 @@ Z = [zZ]
   "+"             { return symbolFactory.newSymbol("PLUS", PLUS); }
   "-"             { return symbolFactory.newSymbol("MINUS", MINUS); }
   "*"             { return symbolFactory.newSymbol("TIMES", TIMES); }
-  "n"             { return symbolFactory.newSymbol("UMINUS", UMINUS); }
+  "/"             { return symbolFactory.newSymbol("DIVIDE", DIVIDE); }
   "("             { return symbolFactory.newSymbol("LPAREN", LPAREN); }
   ")"             { return symbolFactory.newSymbol("RPAREN", RPAREN); }
   {Number}        { return symbolFactory.newSymbol("NUMBER", NUMBER, Integer.parseInt(yytext())); }
   {V}{A}{R}       { return symbolFactory.newSymbol("VAR", VAR); }
   {C}{O}{N}{S}{T} { return symbolFactory.newSymbol("CONST", CONST); }
-  {C}"har"          { return symbolFactory.newSymbol("CHAR", CHAR); }
-  {I}"nteger"       { return symbolFactory.newSymbol("INT", INT); }
-  {B}"oolean"       { return symbolFactory.newSymbol("BOOL", BOOL); }
-  {E}"nd"       { return symbolFactory.newSymbol("END", END); }
+  {C}"har"        { return symbolFactory.newSymbol("CHAR", CHAR); }
+  {I}"nteger"     { return symbolFactory.newSymbol("INT", INT); }
+  {B}"oolean"     { return symbolFactory.newSymbol("BOOL", BOOL); }
+  {E}"nd"         { return symbolFactory.newSymbol("END", END); }
   {B}"egin"       { return symbolFactory.newSymbol("BEGIN", BEGIN); }
   ":"             { return symbolFactory.newSymbol("COLON", COLON); }
   ","		      { return symbolFactory.newSymbol("COMMA", COMMA); }
