@@ -110,7 +110,7 @@ Z = [zZ]
 %%  
 
 <YYINITIAL> {
-
+  {P}"rogram"     { return symbolFactory.newSymbol("PROGRAM", PROGRAM); }
   {Whitespace}    {                              }
   ";"             { return symbolFactory.newSymbol("SEMI", SEMI); }
   "+"             { return symbolFactory.newSymbol("PLUS", PLUS); }
@@ -122,12 +122,15 @@ Z = [zZ]
   {Number}        { return symbolFactory.newSymbol("NUMBER", NUMBER, Integer.parseInt(yytext())); }
   {V}{A}{R}       { return symbolFactory.newSymbol("VAR", VAR); }
   {C}{O}{N}{S}{T} { return symbolFactory.newSymbol("CONST", CONST); }
-  "char"          { return symbolFactory.newSymbol("CHAR", CHAR); }
-  "integer"       { return symbolFactory.newSymbol("INT", INT); }
-  "boolean"       { return symbolFactory.newSymbol("BOOL", BOOL); }
+  {C}"har"          { return symbolFactory.newSymbol("CHAR", CHAR); }
+  {I}"nteger"       { return symbolFactory.newSymbol("INT", INT); }
+  {B}"oolean"       { return symbolFactory.newSymbol("BOOL", BOOL); }
+  {E}"nd"       { return symbolFactory.newSymbol("END", END); }
+  {B}"egin"       { return symbolFactory.newSymbol("BEGIN", BEGIN); }
   ":"             { return symbolFactory.newSymbol("COLON", COLON); }
   ","		      { return symbolFactory.newSymbol("COMMA", COMMA); }
   "="		      { return symbolFactory.newSymbol("EQUAL", EQUAL); }
+  "."		      { return symbolFactory.newSymbol("FULLSTOP", FULLSTOP); }
   {Identifier}    { return symbolFactory.newSymbol("IDENTIFIER", IDENTIFIER, yytext()); }
   {Newline}       { return symbolFactory.newSymbol("NEWLINE", NEWLINE); } 
 }

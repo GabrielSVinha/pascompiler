@@ -1,4 +1,2 @@
-var
-  age, year, grade : integer;
-  LetterGrade : char;
-  DidYouFail : boolean;
+Program aaa;
+End.
