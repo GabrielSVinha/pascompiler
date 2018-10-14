@@ -36,11 +36,12 @@ terminal            SEMI, PLUS, MINUS, UMINUS, TIMES, LPAREN, RPAREN;
 terminal Integer    NUMBER;        // our scanner provides numbers as integersterminal			VAR;4
 terminal			VAR, COLON, COMMA, CONST;
 terminal			BOOL, INT, CHAR;
-terminal			EQUAL;
+terminal			EQUAL, FULLSTOP;
 terminal String     IDENTIFIER;
-terminal			NEWLINE;
+terminal			NEWLINE, PROGRAM, BEGIN, END;
 
 /* Non terminals */
+non terminal              initial, program_def_part, body_def_part;
 non terminal              exp_list;
 non terminal 		      exp;
 non terminal			  exp_part;
@@ -56,10 +57,17 @@ precedence left PLUS, MINUS;
 precedence left TIMES;
 precedence left UMINUS;
 
-start with variable_def_part; // mudar esse start para a cabeça da regra que está trabalhando
+start with initial; // mudar esse start para a cabeça da regra que está trabalhando
 // TODO (GABRIEL): adicionar regra principal que deriva as outras principais 
 
 /* The grammar rules */
+
+initial ::= program_def_part variable_def_part body_def_part;
+
+program_def_part ::= PROGRAM identifier SEMI;
+
+body_def_part ::= BEGIN /*LIST OF STATEMENTS*/ END FULLSTOP;
+body_def_part ::= /*LIST OF STATEMENTS*/ END FULLSTOP;
 
 const_def_part ::= CONST const_def_list;
 const_def_list ::= const_def_list const_def; 
@@ -77,11 +85,13 @@ exp ::= exp MINUS exp;
 exp ::= LPAREN exp RPAREN;
 exp ::= NUMBER;
 
-variable_def_part ::= VAR variable_def_list;
+variable_def_part ::= VAR variable_def_list | ;
 variable_def_list ::= variable_def_list variable_def;
 variable_def_list ::= NEWLINE variable_def_list;
 variable_def_list ::= variable_def;
 variable_def ::= identifier_list COLON type_def SEMI;
+
+attr ::= identifier COLON EQUAL exp_list;
 
 identifier_list ::= identifier_list COMMA identifier; 
 identifier_list ::= identifier;
