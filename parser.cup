@@ -32,9 +32,10 @@ init with {:
 scan with {: return lexer.next_token(); :};
 
 /* Terminals (tokens returned by the scanner). */
-terminal            SEMI, PLUS, MINUS, DIVIDE, TIMES, LPAREN, RPAREN;
+terminal            SEMI, PLUS, MINUS, DIVIDE, TIMES, LPAREN, RPAREN, MOD;
 terminal Integer    NUMBER;        // our scanner provides numbers as integersterminal			VAR;4
 terminal			VAR, COLON, COMMA, CONST;
+terminal            GT, LT, LE, GE, DIFF, NOT, AND, OR, XOR;
 terminal			BOOL, INT, CHAR;
 terminal			EQUAL, FULLSTOP;
 terminal String     IDENTIFIER;
@@ -43,8 +44,8 @@ terminal			NEWLINE, PROGRAM, BEGIN, END;
 /* Non terminals */
 non terminal              initial, program_def_part, body_def_part;
 non terminal              stmt_def_part, stmt_def_list, stmt;
-non terminal              exp_list;
-non terminal 		      exp;
+non terminal              exp_list, literal;
+non terminal 		      exp, rel_op, bool_op, log_op, bin_arim_op, un_arim_op;
 non terminal			  exp_part;
 non terminal			  variable_def, variable_def_list, variable_def_part, variable_opt_nl;
 non terminal              const_def, const_def_list, const_def_part;
@@ -53,6 +54,16 @@ non terminal String   	  identifier;
 non terminal			  type_def;
 non terminal		      attr, assign_operator, equal_op, sum_op, minus_op, times_op, divide_op;
 /* Precedences */ 
+precedence nonassoc MOD;	// Inserted by Eclipse plugin
+precedence nonassoc XOR;	// Inserted by Eclipse plugin
+precedence nonassoc OR;	// Inserted by Eclipse plugin
+precedence nonassoc AND;	// Inserted by Eclipse plugin
+precedence nonassoc DIFF;	// Inserted by Eclipse plugin
+precedence nonassoc GE;	// Inserted by Eclipse plugin
+precedence nonassoc LE;	// Inserted by Eclipse plugin
+precedence nonassoc LE;	// Inserted by Eclipse plugin
+precedence nonassoc LT;	// Inserted by Eclipse plugin
+precedence nonassoc GT;	// Inserted by Eclipse plugin
 precedence nonassoc VAR;	// Inserted by Eclipse plugin
 precedence nonassoc NEWLINE;	// Inserted by Eclipse plugin
 precedence left PLUS, MINUS;
@@ -86,12 +97,37 @@ identifier ::= IDENTIFIER:x;
 exp_list ::= exp_part;
 exp_part ::= exp_part exp; 
 exp_part ::= exp;
-exp ::= exp PLUS exp;
-exp ::= exp TIMES exp;
-exp ::= exp MINUS exp;
+exp ::= bool_op exp;
+exp ::= exp log_op exp;
+exp ::= un_arim_op exp;
+exp ::= exp bin_arim_op exp;
+exp ::= exp rel_op exp;
 exp ::= LPAREN exp RPAREN;
-exp ::= NUMBER;
+exp ::= literal;
 exp ::= identifier;
+
+literal ::= NUMBER;
+
+rel_op ::= GT;
+rel_op ::= LT;
+rel_op ::= GE;
+rel_op ::= LE;
+rel_op ::= DIFF;
+
+bool_op ::= NOT;
+
+log_op ::= AND;
+log_op ::= XOR;
+log_op ::= OR;
+
+bin_arim_op ::= PLUS;
+bin_arim_op ::= MINUS;
+bin_arim_op ::= TIMES;
+bin_arim_op ::= DIVIDE;
+bin_arim_op ::= MOD;
+
+un_arim_op ::= PLUS;
+un_arim_op ::= MINUS;
 
 variable_def_part ::= VAR variable_def_list | ;
 variable_def_list ::= variable_def_list variable_def;

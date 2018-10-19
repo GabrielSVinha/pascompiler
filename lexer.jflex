@@ -117,6 +117,8 @@ Z = [zZ]
   "-"             { return symbolFactory.newSymbol("MINUS", MINUS); }
   "*"             { return symbolFactory.newSymbol("TIMES", TIMES); }
   "/"             { return symbolFactory.newSymbol("DIVIDE", DIVIDE); }
+  {D}"iv"         { return symbolFactory.newSymbol("DIVIDE", DIVIDE); }
+  {M}"od"         { return symbolFactory.newSymbol("MOD", MOD); }
   "("             { return symbolFactory.newSymbol("LPAREN", LPAREN); }
   ")"             { return symbolFactory.newSymbol("RPAREN", RPAREN); }
   {Number}        { return symbolFactory.newSymbol("NUMBER", NUMBER, Integer.parseInt(yytext())); }
@@ -132,7 +134,16 @@ Z = [zZ]
   "="		      { return symbolFactory.newSymbol("EQUAL", EQUAL); }
   "."		      { return symbolFactory.newSymbol("FULLSTOP", FULLSTOP); }
   {Identifier}    { return symbolFactory.newSymbol("IDENTIFIER", IDENTIFIER, yytext()); }
-  {Newline}       { return symbolFactory.newSymbol("NEWLINE", NEWLINE); } 
+  {Newline}       { return symbolFactory.newSymbol("NEWLINE", NEWLINE); }
+  ">"             { return symbolFactory.newSymbol("GT", GT); }
+  "<"             { return symbolFactory.newSymbol("LT", LT);}
+  "<="            { return symbolFactory.newSymbol("LE", LE); }
+  ">="            { return symbolFactory.newSymbol("GE", GE); }
+  "<>"            { return symbolFactory.newSymbol("DIFF", DIFF); }
+  {N}{O}{T}       { return symbolFactory.newSymbol("NOT", NOT); }
+  {A}{N}{D}       { return symbolFactory.newSymbol("AND", AND); }
+  {O}{R}          { return symbolFactory.newSymbol("OR", OR); }
+  {X}{O}{R}       { return symbolFactory.newSymbol("XOR", XOR); } 
 }
 
 

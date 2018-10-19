@@ -1,4 +1,4 @@
 Program aaa;
 begin
-X -= 2;y /= 2;
+X := (3>5) + ------1;
 End.
