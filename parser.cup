@@ -90,7 +90,7 @@ block ::= BEGIN SEMI;
 procedureOrFunctionDeclaration ::= procedureDeclaration | functionDeclaration;
 procedureDeclaration ::= PROCEDURE identifier parametersList SEMI block;
 functionDeclaration ::= FUNCTION identifier;
-parametersList ::= LPAREN RPAREN; // TODO: Complete here! 
+parametersList ::= LPAREN RPAREN | ; // TODO: Complete here between L and R PAREN.
 
 exp_list ::= exp_part;
 exp_part ::= exp_part exp; 
