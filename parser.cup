@@ -39,10 +39,12 @@ terminal            GT, LT, LE, GE, DIFF, NOT, AND, OR, XOR;
 terminal			BOOL, INT, CHAR;
 terminal			EQUAL, FULLSTOP;
 terminal String     IDENTIFIER;
-terminal			NEWLINE, PROGRAM, BEGIN, END;
+terminal			NEWLINE, PROGRAM, BEGIN, END, PROCEDURE, FUNCTION;
 
 /* Non terminals */
 non terminal              initial, program_def_part, body_def_part;
+non terminal			  procedureOrFunctionDeclaration, procedureDeclaration, functionDeclaration, parametersList;
+non terminal 			  block;
 non terminal              stmt_def_part, stmt_def_list, stmt;
 non terminal              exp_list, literal;
 non terminal 		      exp, rel_op, bool_op, log_op, bin_arim_op, un_arim_op;
@@ -93,6 +95,13 @@ const_def_list ::= const_def;
 const_def ::= identifier_list COLON type_def EQUAL exp_list; //ADD LITERAL
 
 identifier ::= IDENTIFIER:x;
+
+// Define a non FULL STOP block, functions and procedures. #WIP
+block ::= BEGIN SEMI;
+procedureOrFunctionDeclaration ::= procedureDeclaration | functionDeclaration;
+procedureDeclaration ::= PROCEDURE identifier parametersList SEMI block;
+functionDeclaration ::= FUNCTION identifier;
+parametersList ::= LPAREN RPAREN | ; // TODO: Complete here between L and R PAREN.
 
 exp_list ::= exp_part;
 exp_part ::= exp_part exp; 

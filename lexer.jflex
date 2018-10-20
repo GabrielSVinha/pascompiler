@@ -111,6 +111,8 @@ Z = [zZ]
 
 <YYINITIAL> {
   {P}"rogram"     { return symbolFactory.newSymbol("PROGRAM", PROGRAM); }
+  {P}"rocedure"   { return symbolFactory.newSymbol("PROCEDURE", PROCEDURE); }
+  {F}"unction"   { return symbolFactory.newSymbol("FUNCTION", FUNCTION); }
   {Whitespace}    {                              }
   ";"             { return symbolFactory.newSymbol("SEMI", SEMI); }
   "+"             { return symbolFactory.newSymbol("PLUS", PLUS); }
