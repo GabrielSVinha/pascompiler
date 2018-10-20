@@ -33,7 +33,9 @@ scan with {: return lexer.next_token(); :};
 
 /* Terminals (tokens returned by the scanner). */
 terminal            SEMI, PLUS, MINUS, DIVIDE, TIMES, LPAREN, RPAREN, MOD;
-terminal Integer    NUMBER;        // our scanner provides numbers as integersterminal			VAR;4
+terminal Integer    INTEGER_LITERAL;        // our scanner provides numbers as integersterminal			VAR;4
+terminal Float		FLOAT_LITERAL;
+terminal Boolean    BOOLEAN_LITERAL;
 terminal			VAR, COLON, COMMA, CONST;
 terminal            GT, LT, LE, GE, DIFF, NOT, AND, OR, XOR;
 terminal			BOOL, INT, CHAR;
@@ -115,7 +117,9 @@ exp ::= LPAREN exp RPAREN;
 exp ::= literal;
 exp ::= identifier;
 
-literal ::= NUMBER;
+literal ::= INTEGER_LITERAL;
+literal ::= FLOAT_LITERAL;
+literal ::= BOOLEAN_LITERAL;
 
 rel_op ::= GT;
 rel_op ::= LT;

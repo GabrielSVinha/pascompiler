@@ -56,7 +56,11 @@ import java.io.InputStreamReader;
 
 Newline    = \r | \n | \r\n
 Whitespace = [ \t\f] | {Newline}
-Number     = [0-9]+
+
+/* Literals */
+IntegerLiteral = [0-9]+
+FloatLiteral = [0-9]+"."[0-9]+
+BooleanLiteral = "false" | "true"
 
 /* comments */
 
@@ -64,7 +68,6 @@ ident = ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )*
 
 Identifier = [a-zA-Z_][a-zA-Z_0-9]*
 
-RealNumber = [0-9]+"."[0-9]+
 
 DigSeq = [0-9]+
 
@@ -123,7 +126,9 @@ Z = [zZ]
   {M}"od"         { return symbolFactory.newSymbol("MOD", MOD); }
   "("             { return symbolFactory.newSymbol("LPAREN", LPAREN); }
   ")"             { return symbolFactory.newSymbol("RPAREN", RPAREN); }
-  {Number}        { return symbolFactory.newSymbol("NUMBER", NUMBER, Integer.parseInt(yytext())); }
+  {IntegerLiteral} { return symbolFactory.newSymbol("INTEGER_LITERAL", INTEGER_LITERAL, Integer.parseInt(yytext())); }
+  {FloatLiteral}  { return symbolFactory.newSymbol("FLOAT_LITERAL", FLOAT_LITERAL, Float.parseFloat(yytext())); }
+  {BooleanLiteral} { return symbolFactory.newSymbol("BOOLEAN_LITERAL", BOOLEAN_LITERAL, yytext()); }
   {V}{A}{R}       { return symbolFactory.newSymbol("VAR", VAR); }
   {C}{O}{N}{S}{T} { return symbolFactory.newSymbol("CONST", CONST); }
   {C}"har"        { return symbolFactory.newSymbol("CHAR", CHAR); }
