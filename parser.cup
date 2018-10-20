@@ -45,7 +45,8 @@ terminal			NEWLINE, PROGRAM, BEGIN, END, PROCEDURE, FUNCTION;
 
 /* Non terminals */
 non terminal              initial, program_def_part, body_def_part;
-non terminal			  procedureOrFunctionDeclaration, procedureDeclaration, functionDeclaration, parametersList;
+non terminal              procedureOrFunctionDeclaration, procedureDeclaration, functionDeclaration, parametersList;
+non terminal              procedureOrFunctionCall, argumentList, currentArgument;
 non terminal 			  block;
 non terminal              stmt_def_part, stmt_def_list, stmt;
 non terminal              exp_list, literal;
@@ -98,15 +99,24 @@ const_def ::= identifier_list COLON type_def EQUAL exp_list; //ADD LITERAL
 
 identifier ::= IDENTIFIER:x;
 
+// Procedure and function calls
+procedureOrFunctionCall ::= identifier LPAREN argumentList RPAREN SEMI;
+argumentList ::= argumentList COMMA currentArgument;
+argumentList ::= currentArgument;
+argumentList ::= /* empty */; // When calling a procedure that has no arguments.
+currentArgument ::= exp;
+
+// Functions calls
+
 // Define a non FULL STOP block, functions and procedures. #WIP
 block ::= BEGIN SEMI;
 procedureOrFunctionDeclaration ::= procedureDeclaration | functionDeclaration;
 procedureDeclaration ::= PROCEDURE identifier parametersList SEMI block;
-functionDeclaration ::= FUNCTION identifier;
-parametersList ::= LPAREN RPAREN | ; // TODO: Complete here between L and R PAREN.
+functionDeclaration ::= FUNCTION identifier; // TODO: Continue here.
+parametersList ::= LPAREN RPAREN | /* empty */ ; // TODO: Complete here between L and R PAREN.
 
 exp_list ::= exp_part;
-exp_part ::= exp_part exp; 
+exp_part ::= exp_part exp;
 exp_part ::= exp;
 exp ::= bool_op exp;
 exp ::= exp log_op exp;
@@ -149,6 +159,7 @@ variable_def_list ::= variable_def;
 variable_def ::= identifier_list COLON type_def SEMI;
 
 attr ::= identifier assign_operator exp_list;
+// attr ::= identifier assign_operator procedureOrFunctionCall; /* We have here a conflict! */
 
 assign_operator ::= equal_op;
 assign_operator ::= sum_op;
