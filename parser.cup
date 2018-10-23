@@ -11,9 +11,32 @@ import cup.example.Lexer;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.*; 
 
 parser code {:
   protected Lexer lexer;
+  public static int errors = 0;
+
+  public void report_error(String message, Object info){
+    if (info instanceof String){
+	errors++; 
+      System.err.println("  "+ errors + "==> " + info + " "+ message +
+							"near " + lexer.current_lexeme());
+    }
+    else {
+    	StringBuffer m = new StringBuffer("Error ");
+    	if (info instanceof java_cup.runtime.Symbol) 
+     	   m.append( "("+info.toString()+")" );     
+    	m.append(" : "+message);   
+    	System.err.println(m);
+    }
+  }
+
+  public void report_fatal_error(String message, Object info) {
+    report_error(message, info);
+    throw new RuntimeException("Fatal Syntax Error");
+  }
+
 :}
 
 /* define how to connect to the scanner! */
@@ -42,6 +65,7 @@ terminal			BOOL, INT, CHAR;
 terminal			EQUAL, FULLSTOP;
 terminal String     IDENTIFIER;
 terminal			NEWLINE, PROGRAM, BEGIN, END, PROCEDURE, FUNCTION;
+terminal            FOR, TO, DOWNTO, DO;
 
 /* Non terminals */
 non terminal              initial, program_def_part, body_def_part;
@@ -55,9 +79,11 @@ non terminal			  variable_def, variable_def_list, variable_def_part, variable_op
 non terminal              const_def, const_def_list, const_def_part;
 non terminal List<String> identifier_list;
 non terminal String   	  identifier;
-non terminal			  type_def;
+non terminal			  type_def, for_direction, for_def_part, for_def, control_attr;
 non terminal		      attr, assign_operator, equal_op, sum_op, minus_op, times_op, divide_op;
 /* Precedences */ 
+precedence nonassoc error;	// Inserted by Eclipse plugin
+precedence nonassoc SEMI;	// Inserted by Eclipse plugin
 precedence nonassoc MOD;	// Inserted by Eclipse plugin
 precedence nonassoc XOR;	// Inserted by Eclipse plugin
 precedence nonassoc OR;	// Inserted by Eclipse plugin
@@ -88,13 +114,20 @@ stmt_def_part ::= stmt_def_list | ;
 stmt_def_list ::= stmt_def_list stmt;
 stmt_def_list ::= stmt;
 stmt_def_list ::= NEWLINE stmt_def_list;
-stmt ::= attr SEMI;
+stmt ::= attr;
 
+for_def_part ::= FOR ;
+for_def_part ::= error {: parser.report_error("Invalid loop syntax ", "ERROR"); :} ;
+for_def ::= control_attr ;
+for_direction ::= TO;
+for_direction ::= DOWNTO;
+
+control_attr ::= identifier COLON EQUAL exp;
 
 const_def_part ::= CONST const_def_list;
 const_def_list ::= const_def_list const_def; 
 const_def_list ::= const_def;
-const_def ::= identifier_list COLON type_def EQUAL exp_list; //ADD LITERAL
+const_def ::= identifier_list COLON type_def EQUAL exp_part; //ADD LITERAL
 
 identifier ::= IDENTIFIER:x;
 
@@ -105,9 +138,9 @@ procedureDeclaration ::= PROCEDURE identifier parametersList SEMI block;
 functionDeclaration ::= FUNCTION identifier;
 parametersList ::= LPAREN RPAREN | ; // TODO: Complete here between L and R PAREN.
 
-exp_list ::= exp_part;
-exp_part ::= exp_part exp; 
-exp_part ::= exp;
+exp_list ::= exp_part ; 
+exp_part ::= exp SEMI;
+exp ::= exp error {: parser.report_error("Missing operand ", "ERROR"); :};
 exp ::= bool_op exp;
 exp ::= exp log_op exp;
 exp ::= un_arim_op exp;
@@ -116,6 +149,7 @@ exp ::= exp rel_op exp;
 exp ::= LPAREN exp RPAREN;
 exp ::= literal;
 exp ::= identifier;
+//exp_list ::= error {: parser.report_fatal_error("O caraio", "ERROR"); :};
 
 literal ::= INTEGER_LITERAL;
 literal ::= FLOAT_LITERAL;
@@ -126,6 +160,7 @@ rel_op ::= LT;
 rel_op ::= GE;
 rel_op ::= LE;
 rel_op ::= DIFF;
+//rel_op ::= error  {: parser.repoer:};
 
 bool_op ::= NOT;
 
@@ -148,7 +183,10 @@ variable_def_list ::= NEWLINE variable_def_list;
 variable_def_list ::= variable_def;
 variable_def ::= identifier_list COLON type_def SEMI;
 
-attr ::= identifier assign_operator exp_list;
+attr ::= identifier assign_operator exp_part;
+attr ::= identifier assign_operator error {: parser.report_error("Error in expression ", "ERROR"); :};
+
+assign_operator ::= error {: parser.report_error("Expected symbol before = ", "ERROR"); :};
 
 assign_operator ::= equal_op;
 assign_operator ::= sum_op;

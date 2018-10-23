@@ -1,4 +1,6 @@
+
 Program aaa;
+
 begin
-X := (3>5) + ------1;
+a := 1 + aaaa + x1 - ;
 End.

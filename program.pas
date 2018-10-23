@@ -1,10 +1,10 @@
 program one;
 var
-  age, year, grade : integer;
-  circumference : real;
-  LetterGrade : char;
-  DidYouFaili : Boolean;
+  i: integer;
 begin
-  age := (3+5) + -------1;
-  writeln(age);
+  for i := 5 to 5 do
+  begin
+    writeLn(i);
+  end;
 end.
+

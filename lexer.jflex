@@ -51,7 +51,17 @@ import java.io.InputStreamReader;
     protected void emit_error(String message){
     	System.out.println("scanner error: " + message + " at : 2" + 
     			(yyline+1) + " " + (yycolumn+1) + " " + yychar);
+    	throw new RuntimeException("Fatal Lexical Error");
     }
+    public String current_lexeme(){
+    	int l = yyline+1;
+    	int c = yycolumn+1;
+    	return " (line: "+l+" , column: "+c+" , lexeme: '"+yytext()+"')";
+  	}
+  	
+  	public int current_line() {
+  		return yyline+1;
+  	}
 %}
 
 Newline    = \r | \n | \r\n
@@ -151,9 +161,13 @@ Z = [zZ]
   {A}{N}{D}       { return symbolFactory.newSymbol("AND", AND); }
   {O}{R}          { return symbolFactory.newSymbol("OR", OR); }
   {X}{O}{R}       { return symbolFactory.newSymbol("XOR", XOR); } 
+  {F}"or"         { return symbolFactory.newSymbol("FOR", FOR); }
+  {T}"o"          { return symbolFactory.newSymbol("TO", TO); } 
+  {D}"ownto"      { return symbolFactory.newSymbol("DOWNTO", DOWNTO); }
+  {D}"o"          { return symbolFactory.newSymbol("DO", DO); } 
 }
 
 
 
 // error fallback
-.|\n          { emit_warning("Unrecognized character '" +yytext()+"' -- ignored"); }
+.|\n          { emit_error("Unrecognized character '" +yytext()+"'"); }
