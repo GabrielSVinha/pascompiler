@@ -9,43 +9,47 @@ package cup.example;
 public interface sym {
   /* terminals */
   public static final int DIVIDE = 5;
-  public static final int CONST = 14;
-  public static final int CHAR = 26;
-  public static final int GE = 18;
-  public static final int XOR = 23;
+  public static final int FUNCTION = 37;
+  public static final int CONST = 16;
+  public static final int CHAR = 28;
+  public static final int GE = 20;
+  public static final int XOR = 25;
   public static final int LPAREN = 7;
   public static final int SEMI = 2;
-  public static final int INT = 25;
-  public static final int FOR = 34;
+  public static final int INT = 27;
+  public static final int FOR = 38;
   public static final int MINUS = 4;
   public static final int RPAREN = 8;
-  public static final int NOT = 20;
-  public static final int AND = 21;
-  public static final int LT = 16;
-  public static final int OR = 22;
-  public static final int BOOL = 24;
-  public static final int COMMA = 13;
-  public static final int BEGIN = 32;
+  public static final int BOOLEAN_LITERAL = 12;
+  public static final int NOT = 22;
+  public static final int AND = 23;
+  public static final int LT = 18;
+  public static final int OR = 24;
+  public static final int BOOL = 26;
+  public static final int COMMA = 15;
+  public static final int BEGIN = 34;
   public static final int PLUS = 3;
-  public static final int LE = 17;
+  public static final int LE = 19;
   public static final int EOF = 0;
-  public static final int EQUAL = 27;
+  public static final int EQUAL = 29;
   public static final int error = 1;
-  public static final int PROGRAM = 31;
-  public static final int NEWLINE = 30;
-  public static final int NUMBER = 10;
+  public static final int PROGRAM = 33;
+  public static final int NEWLINE = 32;
   public static final int MOD = 9;
   public static final int TIMES = 6;
-  public static final int COLON = 12;
-  public static final int TO = 35;
-  public static final int FULLSTOP = 28;
-  public static final int END = 33;
-  public static final int DIFF = 19;
-  public static final int DOWNTO = 36;
-  public static final int GT = 15;
-  public static final int VAR = 11;
-  public static final int DO = 37;
-  public static final int IDENTIFIER = 29;
+  public static final int COLON = 14;
+  public static final int TO = 39;
+  public static final int FULLSTOP = 30;
+  public static final int END = 35;
+  public static final int DIFF = 21;
+  public static final int DOWNTO = 40;
+  public static final int FLOAT_LITERAL = 11;
+  public static final int GT = 17;
+  public static final int PROCEDURE = 36;
+  public static final int VAR = 13;
+  public static final int DO = 41;
+  public static final int INTEGER_LITERAL = 10;
+  public static final int IDENTIFIER = 31;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -57,7 +61,9 @@ public interface sym {
   "LPAREN",
   "RPAREN",
   "MOD",
-  "NUMBER",
+  "INTEGER_LITERAL",
+  "FLOAT_LITERAL",
+  "BOOLEAN_LITERAL",
   "VAR",
   "COLON",
   "COMMA",
@@ -81,6 +87,8 @@ public interface sym {
   "PROGRAM",
   "BEGIN",
   "END",
+  "PROCEDURE",
+  "FUNCTION",
   "FOR",
   "TO",
   "DOWNTO",
