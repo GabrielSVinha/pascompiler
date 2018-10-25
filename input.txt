@@ -1,5 +1,5 @@
 Program aaa;
-function max(num1, num2: integer): integer;
+(*function max(num1, num2: integer): integer;
 var
    result: integer;
 
@@ -14,8 +14,9 @@ var
 
 begin
   a := 1 + aaaa + x1 - 0;
-end;
+end;*)
 
 begin
 a := 1 + aaaa + x1 - 0;
+max(a, 2, b, cc, d, d,wsd, w, 2432, gfer, 234324,324534, qa);
 End.

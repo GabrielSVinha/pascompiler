@@ -72,7 +72,7 @@ non terminal              initial, program_def_part, body_def_part, program_def,
 non terminal			  function_def_part, function_body, function_declaration; 
 non terminal              procedure_def_part, procedure_declaration, procedure_body;
 non terminal              parameter, parameters, parameters_list;
-non terminal 			  block, block_end;
+non terminal 			  block, block_end, call, args;
 non terminal              stmt_def_part, stmt_def_list, stmt;
 non terminal              exp_list, literal;
 non terminal 		      exp, rel_op, bool_op, log_op, bin_arim_op, un_arim_op;
@@ -84,6 +84,7 @@ non terminal String   	  identifier;
 non terminal			  type_def, for_direction, for_def_part, for_def, control_attr;
 non terminal		      attr, assign_operator, equal_op, sum_op, minus_op, times_op, divide_op;
 /* Precedences */ 
+precedence nonassoc VAR;	// Inserted by Eclipse plugin
 precedence nonassoc VAR;	// Inserted by Eclipse plugin
 precedence nonassoc PROCEDURE;	// Inserted by Eclipse plugin
 precedence nonassoc FUNCTION;	// Inserted by Eclipse plugin
@@ -121,6 +122,7 @@ stmt_def_list ::= stmt_def_list stmt;
 stmt_def_list ::= stmt;
 stmt_def_list ::= NEWLINE stmt_def_list;
 stmt ::= attr;
+stmt ::= call;
 
 for_def_part ::= FOR ;
 for_def_part ::= error {: parser.report_error("Invalid loop syntax ", "ERROR"); :} ;
@@ -137,17 +139,16 @@ const_def ::= identifier_list COLON type_def EQUAL exp_part;
 
 identifier ::= IDENTIFIER:x;
 
-header_declarations ::= procedure_def_part | function_def_part;
-
+header_declarations ::= ;
+header_declarations ::= header_declarations procedure_def_part;
+header_declarations ::= header_declarations function_def_part;
 
 block ::= BEGIN;
 block_end ::= END SEMI;
 
-
 procedure_def_part ::= procedure_declaration  procedure_body;
 procedure_declaration ::= PROCEDURE identifier parameters_list SEMI;
 procedure_body ::= block stmt_def_part block_end;
-
 
 function_def_part ::= function_declaration function_body;
 function_declaration ::= FUNCTION identifier parameters_list COLON type_def SEMI;
@@ -158,11 +159,14 @@ parameter ::= identifier_list COLON type_def;
 parameters ::= parameter SEMI parameters;
 parameters ::= parameter;
 
+call ::= identifier LPAREN args RPAREN SEMI;
+args ::= exp;
+args ::= args COMMA exp;
 
 exp_list ::= exp_part ; 
 exp_part ::= exp SEMI;
 exp ::= exp error {: parser.report_error("Missing operand ", "ERROR"); :};
-exp ::= bool_op exp;
+exp ::= bool_op exp; 
 exp ::= exp log_op exp;
 exp ::= un_arim_op exp;
 exp ::= exp bin_arim_op exp;
@@ -170,7 +174,6 @@ exp ::= exp rel_op exp;
 exp ::= LPAREN exp RPAREN;
 exp ::= literal;
 exp ::= identifier;
-//exp_list ::= error {: parser.report_fatal_error("O caraio", "ERROR"); :};
 
 literal ::= INTEGER_LITERAL;
 literal ::= FLOAT_LITERAL;
@@ -181,7 +184,6 @@ rel_op ::= LT;
 rel_op ::= GE;
 rel_op ::= LE;
 rel_op ::= DIFF;
-//rel_op ::= error  {: parser.repoer:};
 
 bool_op ::= NOT;
 
@@ -198,6 +200,7 @@ bin_arim_op ::= MOD;
 un_arim_op ::= PLUS;
 un_arim_op ::= MINUS;
 
+variable_def_part ::= ;
 variable_def_part ::= VAR variable_def_list  ;
 variable_def_list ::= variable_def_list variable_def;
 variable_def_list ::= NEWLINE variable_def_list;
@@ -227,27 +230,3 @@ identifier_list ::= identifier;
 type_def ::= CHAR;
 type_def ::= BOOL;
 type_def ::= INT;
-
-// ~~ CUP-ECLIPSE:CONFLICT-RES-RR ~~ 
- // After this the order of productions matters
-
-//Separated and moved by CUP Eclipse plugin
-
-
-//Moved by CUP Eclipse plugin
-
-
-//Moved by CUP Eclipse plugin
-
-
-//Moved by CUP Eclipse plugin
-header_declarations ::= ;
-
-//Moved by CUP Eclipse plugin
-procedure_def_part ::= ;
-
-//Moved by CUP Eclipse plugin
-variable_def_part ::= ;
-
-//Moved by CUP Eclipse plugin
-function_def_part ::= ;
