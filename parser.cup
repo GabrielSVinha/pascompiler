@@ -84,6 +84,12 @@ non terminal String   	  identifier;
 non terminal			  type_def, for_direction, for_def_part, for_def, control_attr;
 non terminal		      attr, assign_operator, equal_op, sum_op, minus_op, times_op, divide_op;
 /* Precedences */ 
+precedence nonassoc NOT;	// Inserted by Eclipse plugin
+precedence nonassoc BOOLEAN_LITERAL;	// Inserted by Eclipse plugin
+precedence nonassoc FLOAT_LITERAL;	// Inserted by Eclipse plugin
+precedence nonassoc INTEGER_LITERAL;	// Inserted by Eclipse plugin
+precedence nonassoc LPAREN;	// Inserted by Eclipse plugin
+precedence nonassoc IDENTIFIER;	// Inserted by Eclipse plugin
 precedence nonassoc VAR;	// Inserted by Eclipse plugin
 precedence nonassoc VAR;	// Inserted by Eclipse plugin
 precedence nonassoc PROCEDURE;	// Inserted by Eclipse plugin
@@ -123,14 +129,15 @@ stmt_def_list ::= stmt;
 stmt_def_list ::= NEWLINE stmt_def_list;
 stmt ::= attr;
 stmt ::= call;
+stmt ::= for_def_part;
 
-for_def_part ::= FOR ;
-for_def_part ::= error {: parser.report_error("Invalid loop syntax ", "ERROR"); :} ;
+for_def_part ::= control_attr TO exp DO stmt_def_part SEMI;
+/*for_def_part ::= error {: parser.report_error("Invalid loop syntax ", "ERROR"); :} ;
 for_def ::= control_attr ;
 for_direction ::= TO;
-for_direction ::= DOWNTO;
+for_direction ::= DOWNTO;*/
 
-control_attr ::= identifier COLON EQUAL exp;
+control_attr ::= identifier equal_op exp;
 
 const_def_part ::= CONST const_def_list;
 const_def_list ::= const_def_list const_def; 
@@ -139,7 +146,7 @@ const_def ::= identifier_list COLON type_def EQUAL exp_part;
 
 identifier ::= IDENTIFIER:x;
 
-header_declarations ::= ;
+
 header_declarations ::= header_declarations procedure_def_part;
 header_declarations ::= header_declarations function_def_part;
 
@@ -164,7 +171,7 @@ args ::= exp;
 args ::= args COMMA exp;
 
 exp_list ::= exp_part ; 
-exp_part ::= exp SEMI;
+exp_part ::= exp;
 exp ::= exp error {: parser.report_error("Missing operand ", "ERROR"); :};
 exp ::= bool_op exp; 
 exp ::= exp log_op exp;
@@ -200,7 +207,7 @@ bin_arim_op ::= MOD;
 un_arim_op ::= PLUS;
 un_arim_op ::= MINUS;
 
-variable_def_part ::= ;
+
 variable_def_part ::= VAR variable_def_list  ;
 variable_def_list ::= variable_def_list variable_def;
 variable_def_list ::= NEWLINE variable_def_list;
@@ -230,3 +237,36 @@ identifier_list ::= identifier;
 type_def ::= CHAR;
 type_def ::= BOOL;
 type_def ::= INT;
+
+// ~~ CUP-ECLIPSE:CONFLICT-RES-RR ~~ 
+ // After this the order of productions matters
+
+//Moved by CUP Eclipse plugin
+header_declarations ::= ;
+
+//Moved by CUP Eclipse plugin
+variable_def_part ::= ;
+
+//Moved by CUP Eclipse plugin
+
+
+//Moved by CUP Eclipse plugin
+
+
+//Moved by CUP Eclipse plugin
+
+
+//Moved by CUP Eclipse plugin
+
+
+//Moved by CUP Eclipse plugin
+
+
+//Moved by CUP Eclipse plugin
+
+
+//Moved by CUP Eclipse plugin
+
+
+//Moved by CUP Eclipse plugin
+
