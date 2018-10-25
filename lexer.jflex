@@ -123,6 +123,7 @@ Z = [zZ]
 %%  
 
 <YYINITIAL> {
+  {Comment}       {}
   {P}"rogram"     { return symbolFactory.newSymbol("PROGRAM", PROGRAM); }
   {P}"rocedure"   { return symbolFactory.newSymbol("PROCEDURE", PROCEDURE); }
   {F}"unction"   { return symbolFactory.newSymbol("FUNCTION", FUNCTION); }

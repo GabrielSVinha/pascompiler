@@ -1,5 +1,20 @@
-
 Program aaa;
+function max(num1, num2: integer): integer;
+var
+   result: integer;
+
+begin
+  a := 1 + aaaa + x1 - 0;
+end;
+
+
+procedure min(num1, num2: integer);
+var
+   res: integer;
+
+begin
+  a := 1 + aaaa + x1 - 0;
+end;
 
 begin
 a := 1 + aaaa + x1 - 0;
