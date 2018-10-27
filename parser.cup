@@ -80,10 +80,12 @@ non terminal			  exp_part;
 non terminal			  variable_def, variable_def_list, variable_def_part, variable_opt_nl;
 non terminal              const_def, const_def_list, const_def_part;
 non terminal List<String> identifier_list;
-non terminal String   	  identifier;
-non terminal			  type_def, for_direction, for_def_part, for_def, control_attr;
+non terminal String   	  identifier, final_value, for_stmt;
+non terminal			  type_def, control_variable, for_def_part, initial_value, direction, for_designator;
 non terminal		      attr, assign_operator, equal_op, sum_op, minus_op, times_op, divide_op;
 /* Precedences */ 
+precedence left FOR;	// Inserted by Eclipse plugin
+precedence nonassoc IDENTIFIER;	// Inserted by Eclipse plugin
 precedence nonassoc NOT;	// Inserted by Eclipse plugin
 precedence nonassoc BOOLEAN_LITERAL;	// Inserted by Eclipse plugin
 precedence nonassoc FLOAT_LITERAL;	// Inserted by Eclipse plugin
@@ -126,25 +128,32 @@ body_def_part ::= stmt_def_part END FULLSTOP;
 stmt_def_part ::= stmt_def_list | ;
 stmt_def_list ::= stmt_def_list stmt;
 stmt_def_list ::= stmt;
-stmt_def_list ::= NEWLINE stmt_def_list;
+stmt ::= for_def_part;
 stmt ::= attr;
 stmt ::= call;
-stmt ::= for_def_part;
 
-for_def_part ::= control_attr TO exp DO stmt_def_part SEMI;
-/*for_def_part ::= error {: parser.report_error("Invalid loop syntax ", "ERROR"); :} ;
-for_def ::= control_attr ;
-for_direction ::= TO;
-for_direction ::= DOWNTO;*/
 
-control_attr ::= identifier equal_op exp;
+for_designator ::= FOR control_variable equal_op initial_value direction final_value;
+
+control_variable ::= identifier;
+
+initial_value ::= exp_part;
+
+direction ::= TO | DOWNTO;
+
+final_value ::= exp_part;
+
+for_def_part ::= for_designator DO for_stmt ;
+for_stmt ::= block stmt_def_part block_end;
+for_stmt ::= stmt_def_part;
+for_def_part ::= error {:parser.report_error("Error in for definition ", "ERROR"); :};
 
 const_def_part ::= CONST const_def_list;
 const_def_list ::= const_def_list const_def; 
 const_def_list ::= const_def;
 const_def ::= identifier_list COLON type_def EQUAL exp_part;
 
-identifier ::= IDENTIFIER:x;
+identifier ::= IDENTIFIER;
 
 
 header_declarations ::= header_declarations procedure_def_part;
@@ -172,6 +181,8 @@ args ::= args COMMA exp;
 
 exp_list ::= exp_part ; 
 exp_part ::= exp;
+exp ::= literal;
+exp ::= identifier;
 exp ::= exp error {: parser.report_error("Missing operand ", "ERROR"); :};
 exp ::= bool_op exp; 
 exp ::= exp log_op exp;
@@ -179,8 +190,6 @@ exp ::= un_arim_op exp;
 exp ::= exp bin_arim_op exp;
 exp ::= exp rel_op exp;
 exp ::= LPAREN exp RPAREN;
-exp ::= literal;
-exp ::= identifier;
 
 literal ::= INTEGER_LITERAL;
 literal ::= FLOAT_LITERAL;
@@ -214,7 +223,7 @@ variable_def_list ::= NEWLINE variable_def_list;
 variable_def_list ::= variable_def;
 variable_def ::= identifier_list COLON type_def SEMI;
 
-attr ::= identifier assign_operator exp_part;
+attr ::= identifier assign_operator exp_part SEMI;
 attr ::= identifier assign_operator error {: parser.report_error("Error in expression ", "ERROR"); :};
 
 assign_operator ::= error {: parser.report_error("Expected symbol before = ", "ERROR"); :};
@@ -246,27 +255,3 @@ header_declarations ::= ;
 
 //Moved by CUP Eclipse plugin
 variable_def_part ::= ;
-
-//Moved by CUP Eclipse plugin
-
-
-//Moved by CUP Eclipse plugin
-
-
-//Moved by CUP Eclipse plugin
-
-
-//Moved by CUP Eclipse plugin
-
-
-//Moved by CUP Eclipse plugin
-
-
-//Moved by CUP Eclipse plugin
-
-
-//Moved by CUP Eclipse plugin
-
-
-//Moved by CUP Eclipse plugin
-

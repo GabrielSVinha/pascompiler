@@ -1,5 +1,9 @@
 Program aaa;
 
 begin
-	vid := 2 TO 0 do ;
+  for a := 10  to 20 do
+   
+  begin
+    writeln(a);
+  end;
 end.

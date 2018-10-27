@@ -124,6 +124,9 @@ Z = [zZ]
 
 <YYINITIAL> {
   {Comment}       {}
+  {F}{O}{R}         { return symbolFactory.newSymbol("FOR", FOR); }
+  {T}"o"          { return symbolFactory.newSymbol("TO", TO); } 
+  {D}"ownto"      { return symbolFactory.newSymbol("DOWNTO", DOWNTO); }
   {P}"rogram"     { return symbolFactory.newSymbol("PROGRAM", PROGRAM); }
   {P}"rocedure"   { return symbolFactory.newSymbol("PROCEDURE", PROCEDURE); }
   {F}"unction"   { return symbolFactory.newSymbol("FUNCTION", FUNCTION); }
@@ -151,7 +154,6 @@ Z = [zZ]
   ","		      { return symbolFactory.newSymbol("COMMA", COMMA); }
   "="		      { return symbolFactory.newSymbol("EQUAL", EQUAL); }
   "."		      { return symbolFactory.newSymbol("FULLSTOP", FULLSTOP); }
-  {Identifier}    { return symbolFactory.newSymbol("IDENTIFIER", IDENTIFIER, yytext()); }
   {Newline}       { return symbolFactory.newSymbol("NEWLINE", NEWLINE); }
   ">"             { return symbolFactory.newSymbol("GT", GT); }
   "<"             { return symbolFactory.newSymbol("LT", LT);}
@@ -162,10 +164,8 @@ Z = [zZ]
   {A}{N}{D}       { return symbolFactory.newSymbol("AND", AND); }
   {O}{R}          { return symbolFactory.newSymbol("OR", OR); }
   {X}{O}{R}       { return symbolFactory.newSymbol("XOR", XOR); } 
-  {F}"or"         { return symbolFactory.newSymbol("FOR", FOR); }
-  {T}"o"          { return symbolFactory.newSymbol("TO", TO); } 
-  {D}"ownto"      { return symbolFactory.newSymbol("DOWNTO", DOWNTO); }
   {D}"o"          { return symbolFactory.newSymbol("DO", DO); } 
+  {Identifier}    { return symbolFactory.newSymbol("IDENTIFIER", IDENTIFIER, yytext()); }
 }
 
 
