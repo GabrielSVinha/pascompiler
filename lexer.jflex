@@ -71,7 +71,7 @@ Whitespace = [ \t\f] | {Newline}
 IntegerLiteral = [0-9]+
 FloatLiteral = [0-9]+"."[0-9]+
 BooleanLiteral = "false" | "true"
-
+StringLiteral = [\"][a-zA-Z_0-9]*[\"] | [\'][a-zA-Z_0-9]*[\']
 /* comments */
 
 ident = ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )*
@@ -142,7 +142,8 @@ Z = [zZ]
   ")"             { return symbolFactory.newSymbol("RPAREN", RPAREN); }
   {IntegerLiteral} { return symbolFactory.newSymbol("INTEGER_LITERAL", INTEGER_LITERAL, Integer.parseInt(yytext())); }
   {FloatLiteral}  { return symbolFactory.newSymbol("FLOAT_LITERAL", FLOAT_LITERAL, Float.parseFloat(yytext())); }
-  {BooleanLiteral} { return symbolFactory.newSymbol("BOOLEAN_LITERAL", BOOLEAN_LITERAL, yytext()); }
+  {BooleanLiteral} { return symbolFactory.newSymbol("BOOLEAN_LITERAL", BOOLEAN_LITERAL, Boolean.valueOf(yytext())); }
+  {StringLiteral} { return symbolFactory.newSymbol("STRING_LITERAL", STRING_LITERAL, yytext()); }
   {V}{A}{R}       { return symbolFactory.newSymbol("VAR", VAR); }
   {C}{O}{N}{S}{T} { return symbolFactory.newSymbol("CONST", CONST); }
   {C}"har"        { return symbolFactory.newSymbol("CHAR", CHAR); }

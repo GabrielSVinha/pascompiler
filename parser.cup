@@ -59,6 +59,7 @@ terminal            SEMI, PLUS, MINUS, DIVIDE, TIMES, LPAREN, RPAREN, MOD;
 terminal Integer    INTEGER_LITERAL;        // our scanner provides numbers as integersterminal			VAR;4
 terminal Float		FLOAT_LITERAL;
 terminal Boolean    BOOLEAN_LITERAL;
+terminal String     STRING_LITERAL;
 terminal			VAR, COLON, COMMA, CONST;
 terminal            GT, LT, LE, GE, DIFF, NOT, AND, OR, XOR;
 terminal			BOOL, INT, CHAR;
@@ -194,6 +195,7 @@ exp ::= LPAREN exp RPAREN;
 literal ::= INTEGER_LITERAL;
 literal ::= FLOAT_LITERAL;
 literal ::= BOOLEAN_LITERAL;
+literal ::= STRING_LITERAL;
 
 rel_op ::= GT;
 rel_op ::= LT;

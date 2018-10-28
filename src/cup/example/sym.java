@@ -9,47 +9,48 @@ package cup.example;
 public interface sym {
   /* terminals */
   public static final int DIVIDE = 5;
-  public static final int FUNCTION = 37;
-  public static final int CONST = 16;
-  public static final int CHAR = 28;
-  public static final int GE = 20;
-  public static final int XOR = 25;
+  public static final int FUNCTION = 38;
+  public static final int STRING_LITERAL = 13;
+  public static final int CONST = 17;
+  public static final int CHAR = 29;
+  public static final int GE = 21;
+  public static final int XOR = 26;
   public static final int LPAREN = 7;
   public static final int SEMI = 2;
-  public static final int INT = 27;
-  public static final int FOR = 38;
+  public static final int INT = 28;
+  public static final int FOR = 39;
   public static final int MINUS = 4;
   public static final int RPAREN = 8;
   public static final int BOOLEAN_LITERAL = 12;
-  public static final int NOT = 22;
-  public static final int AND = 23;
-  public static final int LT = 18;
-  public static final int OR = 24;
-  public static final int BOOL = 26;
-  public static final int COMMA = 15;
-  public static final int BEGIN = 34;
+  public static final int NOT = 23;
+  public static final int AND = 24;
+  public static final int LT = 19;
+  public static final int OR = 25;
+  public static final int BOOL = 27;
+  public static final int COMMA = 16;
+  public static final int BEGIN = 35;
   public static final int PLUS = 3;
-  public static final int LE = 19;
+  public static final int LE = 20;
   public static final int EOF = 0;
-  public static final int EQUAL = 29;
+  public static final int EQUAL = 30;
   public static final int error = 1;
-  public static final int PROGRAM = 33;
-  public static final int NEWLINE = 32;
+  public static final int PROGRAM = 34;
+  public static final int NEWLINE = 33;
   public static final int MOD = 9;
   public static final int TIMES = 6;
-  public static final int COLON = 14;
-  public static final int TO = 39;
-  public static final int FULLSTOP = 30;
-  public static final int END = 35;
-  public static final int DIFF = 21;
-  public static final int DOWNTO = 40;
+  public static final int COLON = 15;
+  public static final int TO = 40;
+  public static final int FULLSTOP = 31;
+  public static final int END = 36;
+  public static final int DIFF = 22;
+  public static final int DOWNTO = 41;
   public static final int FLOAT_LITERAL = 11;
-  public static final int GT = 17;
-  public static final int PROCEDURE = 36;
-  public static final int VAR = 13;
-  public static final int DO = 41;
+  public static final int GT = 18;
+  public static final int PROCEDURE = 37;
+  public static final int VAR = 14;
+  public static final int DO = 42;
   public static final int INTEGER_LITERAL = 10;
-  public static final int IDENTIFIER = 31;
+  public static final int IDENTIFIER = 32;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -64,6 +65,7 @@ public interface sym {
   "INTEGER_LITERAL",
   "FLOAT_LITERAL",
   "BOOLEAN_LITERAL",
+  "STRING_LITERAL",
   "VAR",
   "COLON",
   "COMMA",
