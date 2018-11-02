@@ -1,0 +1,12 @@
+Program aaa;
+
+var
+mystr1, mystr2 : string;
+(*myint : integer;*)
+
+(*myint : integer;*)
+
+begin
+	mystr1 := 'Hello, ';
+	mystr2 := 'world.';
+end.
