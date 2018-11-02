@@ -12,7 +12,6 @@ public interface sym {
   public static final int FUNCTION = 38;
   public static final int STRING_LITERAL = 13;
   public static final int CONST = 17;
-  public static final int CHAR = 29;
   public static final int GE = 21;
   public static final int XOR = 26;
   public static final int LPAREN = 7;
@@ -42,6 +41,7 @@ public interface sym {
   public static final int TO = 40;
   public static final int FULLSTOP = 31;
   public static final int END = 36;
+  public static final int STRING = 29;
   public static final int DIFF = 22;
   public static final int DOWNTO = 41;
   public static final int FLOAT_LITERAL = 11;
@@ -81,7 +81,7 @@ public interface sym {
   "XOR",
   "BOOL",
   "INT",
-  "CHAR",
+  "STRING",
   "EQUAL",
   "FULLSTOP",
   "IDENTIFIER",

@@ -62,7 +62,7 @@ terminal Boolean    BOOLEAN_LITERAL;
 terminal String     STRING_LITERAL;
 terminal			VAR, COLON, COMMA, CONST;
 terminal            GT, LT, LE, GE, DIFF, NOT, AND, OR, XOR;
-terminal			BOOL, INT, CHAR;
+terminal			BOOL, INT, STRING;
 terminal			EQUAL, FULLSTOP;
 terminal String     IDENTIFIER;
 terminal			NEWLINE, PROGRAM, BEGIN, END, PROCEDURE, FUNCTION;
@@ -245,9 +245,9 @@ divide_op ::= DIVIDE EQUAL;
 identifier_list ::= identifier_list COMMA identifier; 
 identifier_list ::= identifier;
 
-type_def ::= CHAR;
 type_def ::= BOOL;
 type_def ::= INT;
+type_def ::= STRING;
 
 // ~~ CUP-ECLIPSE:CONFLICT-RES-RR ~~ 
  // After this the order of productions matters
