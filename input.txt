@@ -1,5 +1,5 @@
 Program aaa;
 
 begin
-  i := "a";
+  i := 'a';
 end.

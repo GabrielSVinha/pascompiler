@@ -71,7 +71,7 @@ Whitespace = [ \t\f] | {Newline}
 IntegerLiteral = [0-9]+
 FloatLiteral = [0-9]+"."[0-9]+
 BooleanLiteral = "false" | "true"
-StringLiteral = [\"][a-zA-Z_0-9]*[\"] | [\'][a-zA-Z_0-9]*[\']
+StringLiteral = [\'][a-zA-Z_0-9]*[\']
 /* comments */
 
 ident = ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )*
