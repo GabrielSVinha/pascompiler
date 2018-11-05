@@ -125,13 +125,14 @@ Z = [zZ]
 
 <YYINITIAL> {
   {Comment}       {}
+  {Whitespace}    {                              }
+  {Newline}       { return symbolFactory.newSymbol("NEWLINE", NEWLINE); }
   {F}{O}{R}         { return symbolFactory.newSymbol("FOR", FOR); }
   {T}"o"          { return symbolFactory.newSymbol("TO", TO); } 
   {D}"ownto"      { return symbolFactory.newSymbol("DOWNTO", DOWNTO); }
   {P}"rogram"     { return symbolFactory.newSymbol("PROGRAM", PROGRAM); }
   {P}"rocedure"   { return symbolFactory.newSymbol("PROCEDURE", PROCEDURE); }
   {F}"unction"   { return symbolFactory.newSymbol("FUNCTION", FUNCTION); }
-  {Whitespace}    {                              }
   ";"             { return symbolFactory.newSymbol("SEMI", SEMI); }
   "+"             { return symbolFactory.newSymbol("PLUS", PLUS); }
   "-"             { return symbolFactory.newSymbol("MINUS", MINUS); }
@@ -147,8 +148,8 @@ Z = [zZ]
   {StringLiteral} { return symbolFactory.newSymbol("STRING_LITERAL", STRING_LITERAL, yytext()); }
   {V}{A}{R}       { return symbolFactory.newSymbol("VAR", VAR); }
   {C}{O}{N}{S}{T} { return symbolFactory.newSymbol("CONST", CONST); }
-  // {C}"har"        { return symbolFactory.newSymbol("CHAR", CHAR); }
   {I}"nteger"     { return symbolFactory.newSymbol("INT", INT); }
+  {R}"eal"        { return symbolFactory.newSymbol("REAL", REAL); }
   {B}"oolean"     { return symbolFactory.newSymbol("BOOL", BOOL); }
   {S}"tring"      { return symbolFactory.newSymbol("STRING", STRING); }
   {E}"nd"         { return symbolFactory.newSymbol("END", END); }
@@ -157,7 +158,6 @@ Z = [zZ]
   ","		      { return symbolFactory.newSymbol("COMMA", COMMA); }
   "="		      { return symbolFactory.newSymbol("EQUAL", EQUAL); }
   "."		      { return symbolFactory.newSymbol("FULLSTOP", FULLSTOP); }
-  {Newline}       { return symbolFactory.newSymbol("NEWLINE", NEWLINE); }
   ">"             { return symbolFactory.newSymbol("GT", GT); }
   "<"             { return symbolFactory.newSymbol("LT", LT);}
   "<="            { return symbolFactory.newSymbol("LE", LE); }

@@ -11,7 +11,9 @@ import cup.example.Lexer;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.*; 
+import java.io.*;
+import type.*;
+import symbolTable.*;  
 
 parser code {:
   protected Lexer lexer;
@@ -37,7 +39,32 @@ parser code {:
     throw new RuntimeException("Fatal Syntax Error");
   }
 
+  public void checkCompatibleTypes(Type t1, Type t2){
+    if (t1.equals(t2)){return;}
+    if (t1.getVal().equals("integer") && t2.getVal().equals("real")){return;}
+    if (t2.getVal().equals("integer") && t1.getVal().equals("real")){return;}
+    report_error("Incompatible types ", "ERROR");
+  }
+
 :}
+
+action code {:
+    class Exp {
+	    public Type type;
+	    public String code;
+	    public boolean isConstant;
+
+	    Exp(Type t, String code) {
+  		  this(t, code, false);
+	    }
+	  
+	    Exp(Type t, String code, boolean cte) {
+		  type = t;
+		  this.code = code;
+		  isConstant = cte;
+	    }
+	}
+:};
 
 /* define how to connect to the scanner! */
 init with {:
@@ -51,18 +78,20 @@ init with {:
     e.printStackTrace();
   } 
   lexer = new Lexer(f,fis);
+  Type.buildTypes();
+  SymbolTable.initialize();
 :};
 scan with {: return lexer.next_token(); :};
 
 /* Terminals (tokens returned by the scanner). */
 terminal            SEMI, PLUS, MINUS, DIVIDE, TIMES, LPAREN, RPAREN, MOD;
-terminal Integer    INTEGER_LITERAL;        // our scanner provides numbers as integersterminal			VAR;4
-terminal Float		FLOAT_LITERAL;
+terminal Integer    INTEGER_LITERAL;
+terminal Float      FLOAT_LITERAL;
 terminal Boolean    BOOLEAN_LITERAL;
 terminal String     STRING_LITERAL;
 terminal			VAR, COLON, COMMA, CONST;
 terminal            GT, LT, LE, GE, DIFF, NOT, AND, OR, XOR;
-terminal			BOOL, INT, STRING;
+terminal			BOOL, INT, STRING, REAL;
 terminal			EQUAL, FULLSTOP;
 terminal String     IDENTIFIER;
 terminal			NEWLINE, PROGRAM, BEGIN, END, PROCEDURE, FUNCTION;
@@ -129,8 +158,8 @@ body_def_part ::= stmt_def_part END FULLSTOP;
 stmt_def_part ::= stmt_def_list | ;
 stmt_def_list ::= stmt_def_list stmt;
 stmt_def_list ::= stmt;
-stmt ::= for_def_part;
 stmt ::= attr;
+stmt ::= for_def_part;
 stmt ::= call;
 
 
@@ -154,7 +183,9 @@ const_def_list ::= const_def_list const_def;
 const_def_list ::= const_def;
 const_def ::= identifier_list COLON type_def EQUAL exp_part;
 
-identifier ::= IDENTIFIER;
+identifier ::= IDENTIFIER:x {:
+	RESULT = x;
+:};
 
 
 header_declarations ::= header_declarations procedure_def_part;
@@ -163,7 +194,7 @@ header_declarations ::= header_declarations function_def_part;
 block ::= BEGIN;
 block_end ::= END SEMI;
 
-procedure_def_part ::= procedure_declaration  procedure_body;
+procedure_def_part ::= procedure_declaration variable_def_part procedure_body;
 procedure_declaration ::= PROCEDURE identifier parameters_list SEMI;
 procedure_body ::= block stmt_def_part block_end;
 
@@ -172,6 +203,7 @@ function_declaration ::= FUNCTION identifier parameters_list COLON type_def SEMI
 function_body ::= block stmt_def_part block_end;
 
 parameters_list ::= LPAREN parameters RPAREN;
+parameters_list ::= ;
 parameter ::= identifier_list COLON type_def;
 parameters ::= parameter SEMI parameters;
 parameters ::= parameter;
@@ -180,22 +212,48 @@ call ::= identifier LPAREN args RPAREN SEMI;
 args ::= exp;
 args ::= args COMMA exp;
 
-exp_list ::= exp_part ; 
-exp_part ::= exp;
-exp ::= literal;
-exp ::= identifier;
+exp_part ::= exp:ex {:
+	Exp e = (Exp)ex;
+	RESULT = new Exp(e.type, e.code);
+:};
+exp ::= literal:l {:
+	Exp e;
+    if (l instanceof Integer) {
+		e = new Exp(Type.getType("integer"), String.valueOf(l));
+	} else if (l instanceof Float){
+		e = new Exp(Type.getType("real"), String.valueOf(l));
+	} else if (l instanceof String) {
+		e = new Exp(Type.getType("string"), String.valueOf(l));
+	} else {
+		parser.report_error("Unknown data type ", "ERROR");
+		e = null;
+	}
+	RESULT = e;
+:};
+exp ::= identifier:id {:
+	RESULT = id;
+:};
 exp ::= exp error {: parser.report_error("Missing operand ", "ERROR"); :};
-exp ::= bool_op exp; 
+exp ::= bool_op exp;
 exp ::= exp log_op exp;
 exp ::= un_arim_op exp;
 exp ::= exp bin_arim_op exp;
 exp ::= exp rel_op exp;
-exp ::= LPAREN exp RPAREN;
+exp ::= LPAREN exp:ex RPAREN {:
+	Exp e = (Exp)ex;
+	RESULT = new Exp(e.type, e.code);
+:};
 
-literal ::= INTEGER_LITERAL;
-literal ::= FLOAT_LITERAL;
-literal ::= BOOLEAN_LITERAL;
-literal ::= STRING_LITERAL;
+literal ::= INTEGER_LITERAL:il {:
+	RESULT = il;
+:};
+
+literal ::= BOOLEAN_LITERAL:bl {:
+	RESULT = bl;
+:};
+literal ::= STRING_LITERAL:sl {:
+	RESULT = sl;
+:};
 
 rel_op ::= GT;
 rel_op ::= LT;
@@ -219,13 +277,21 @@ un_arim_op ::= PLUS;
 un_arim_op ::= MINUS;
 
 
-variable_def_part ::= VAR variable_def_list  ;
-variable_def_list ::= variable_def_list variable_def;
-variable_def_list ::= NEWLINE variable_def_list;
-variable_def_list ::= variable_def;
-variable_def ::= identifier_list COLON type_def SEMI;
+variable_def_part ::= VAR variable_def_list ;
+variable_def_list ::= variable_def_list variable_def | variable_def;
+variable_def ::= identifier_list:il COLON type_def:td SEMI {:
+	for (String id: il){
+		if(!SymbolTable.insert(id.toLowerCase(), new SymbolImpl(id, (Type)td))) {
+	        parser.report_error("Duplicated variable ", id);
+	    }
+	}
+:};
+variable_def ::= error {: parser.report_error("","expected ';' before token"); :} SEMI;
 
-attr ::= identifier assign_operator exp_part SEMI;
+attr ::= identifier:id assign_operator exp_part:ex SEMI{:
+	Exp e = (Exp)ex;
+    parser.checkCompatibleTypes(SymbolTable.get(id).getType(), e.type);
+:};
 attr ::= identifier assign_operator error {: parser.report_error("Error in expression ", "ERROR"); :};
 
 assign_operator ::= error {: parser.report_error("Expected symbol before = ", "ERROR"); :};
@@ -242,12 +308,28 @@ minus_op  ::= MINUS EQUAL;
 times_op ::= TIMES EQUAL;
 divide_op ::= DIVIDE EQUAL;
 
-identifier_list ::= identifier_list COMMA identifier; 
-identifier_list ::= identifier;
+identifier_list ::= identifier_list:il COMMA identifier:id {:
+	il.add(id.toLowerCase());
+	RESULT = il;
+:};
+identifier_list ::= identifier:id {:
+	List<String> il = new ArrayList<String>();
+   	il.add(id.toLowerCase());
+   	RESULT = il;
+:};
 
-type_def ::= BOOL;
-type_def ::= INT;
-type_def ::= STRING;
+type_def ::= STRING {:
+	RESULT = Type.getType("string");
+:};
+type_def ::= BOOL{:
+	RESULT = Type.getType("boolean");
+:};
+type_def ::= INT {:
+	RESULT = Type.getType("integer");
+:};
+type_def ::= REAL {:
+	RESULT = Type.getType("real");
+:};
 
 // ~~ CUP-ECLIPSE:CONFLICT-RES-RR ~~ 
  // After this the order of productions matters
@@ -257,3 +339,13 @@ header_declarations ::= ;
 
 //Moved by CUP Eclipse plugin
 variable_def_part ::= ;
+
+//Moved by CUP Eclipse plugin
+literal ::= FLOAT_LITERAL:rl {:
+	RESULT = rl;
+:};
+
+//Moved by CUP Eclipse plugin
+literal ::= FLOAT_LITERAL:fl {:
+	RESULT = fl;
+:};
