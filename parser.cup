@@ -46,6 +46,17 @@ parser code {:
     report_error("Incompatible types ", "ERROR");
   }
 
+	public Type checkRelationalExp(Type e1, Type e2, String op){
+		if (op.equals("<>")){
+				if (!(e1.equals(e2))){
+					report_error("Incompatible types", "ERROR");
+				}
+		} else {
+			checkCompatibleTypes(e1, e2);
+		}
+		return Type.getType("boolean");
+	}
+
 :}
 
 action code {:
@@ -164,24 +175,15 @@ stmt ::= call;
 
 
 for_designator ::= FOR control_variable equal_op initial_value direction final_value;
-
 control_variable ::= identifier;
-
 initial_value ::= exp_part;
-
 direction ::= TO | DOWNTO;
-
 final_value ::= exp_part;
 
 for_def_part ::= for_designator DO for_stmt ;
 for_stmt ::= block stmt_def_part block_end;
 for_stmt ::= stmt_def_part;
 for_def_part ::= error {:parser.report_error("Error in for definition ", "ERROR"); :};
-
-const_def_part ::= CONST const_def_list;
-const_def_list ::= const_def_list const_def; 
-const_def_list ::= const_def;
-const_def ::= identifier_list COLON type_def EQUAL exp_part;
 
 identifier ::= IDENTIFIER:x {:
 	RESULT = x;
@@ -224,6 +226,8 @@ exp ::= literal:l {:
 		e = new Exp(Type.getType("real"), String.valueOf(l));
 	} else if (l instanceof String) {
 		e = new Exp(Type.getType("string"), String.valueOf(l));
+	} else if (l instanceof Boolean) {
+		e = new Exp(Type.getType("boolean"), String.valueOf(l));
 	} else {
 		parser.report_error("Unknown data type ", "ERROR");
 		e = null;
@@ -231,14 +235,38 @@ exp ::= literal:l {:
 	RESULT = e;
 :};
 exp ::= identifier:id {:
-	RESULT = id;
+	RESULT = new Exp(SymbolTable.get(id).getType(), id);
 :};
 exp ::= exp error {: parser.report_error("Missing operand ", "ERROR"); :};
-exp ::= bool_op exp;
-exp ::= exp log_op exp;
-exp ::= un_arim_op exp;
-exp ::= exp bin_arim_op exp;
-exp ::= exp rel_op exp;
+exp ::= bool_op:op exp:e1 {:
+	Exp ex1 = (Exp)e1;
+	parser.checkCompatibleTypes(ex1.type, Type.getType("boolean"));
+	RESULT = new Exp(Type.getType("boolean"), (String)op + ex1.code);
+:};
+exp ::= exp:e1 log_op:op exp:e2{:
+	Exp ex1 = (Exp)e1;
+	Exp ex2 = (Exp)e2;
+	parser.checkCompatibleTypes(ex1.type, Type.getType("boolean"));
+	parser.checkCompatibleTypes(ex2.type, Type.getType("boolean"));
+	RESULT = new Exp(Type.getType("boolean"), ex1.code + (String)op + ex2.code);
+:};
+exp ::= un_arim_op:op exp:e1 {:
+	Exp ex1 = (Exp)e1;
+	parser.checkCompatibleTypes(ex1.type, Type.getType("integer"));
+	RESULT = new Exp(ex1.type, (String)op + ex1.code);
+:};
+exp ::= exp:e1 bin_arim_op:op exp:e2 {:
+	Exp ex1 = (Exp)e1;
+	Exp ex2 = (Exp)e2;
+	parser.checkCompatibleTypes(ex1.type, ex2.type);
+	RESULT = new Exp(Type.max(ex1.type, ex2.type), ex1.code + (String)op + ex2.code);
+:};
+exp ::= exp:e1 rel_op:op exp:e2 {:
+	Exp ex1 = (Exp)e1;
+	Exp ex2 = (Exp)e2;
+	RESULT = new Exp(parser.checkRelationalExp(ex1.type, ex2.type, (String)op), ex1.code + (String)op + ex2.code);
+:};
+
 exp ::= LPAREN exp:ex RPAREN {:
 	Exp e = (Exp)ex;
 	RESULT = new Exp(e.type, e.code);
@@ -255,23 +283,51 @@ literal ::= STRING_LITERAL:sl {:
 	RESULT = sl;
 :};
 
-rel_op ::= GT;
-rel_op ::= LT;
-rel_op ::= GE;
-rel_op ::= LE;
-rel_op ::= DIFF;
+rel_op ::= GT {:
+    RESULT = ">";
+:};
+rel_op ::= LT {:
+    RESULT = "<";
+:};
+rel_op ::= GE {:
+    RESULT = ">=";
+:};
+rel_op ::= LE {:
+    RESULT = "<=";
+:};
+rel_op ::= DIFF {:
+    RESULT = "<>";
+:};
 
-bool_op ::= NOT;
+bool_op ::= NOT{:
+    RESULT = "not";
+:};
 
-log_op ::= AND;
-log_op ::= XOR;
-log_op ::= OR;
+log_op ::= AND {:
+    RESULT = "and";
+:};
+log_op ::= XOR{:
+    RESULT = "xor";
+:};
+log_op ::= OR{:
+    RESULT = "or";
+:};
 
-bin_arim_op ::= PLUS;
-bin_arim_op ::= MINUS;
-bin_arim_op ::= TIMES;
-bin_arim_op ::= DIVIDE;
-bin_arim_op ::= MOD;
+bin_arim_op ::= PLUS {:
+    RESULT = "+";
+:};
+bin_arim_op ::= MINUS {:
+    RESULT = "-";
+:};
+bin_arim_op ::= TIMES {:
+    RESULT = "*";
+:};
+bin_arim_op ::= DIVIDE {:
+    RESULT = "/";
+:};
+bin_arim_op ::= MOD {:
+    RESULT = "mod";
+:};
 
 un_arim_op ::= PLUS;
 un_arim_op ::= MINUS;

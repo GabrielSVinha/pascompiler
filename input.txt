@@ -1,13 +1,8 @@
 Program aaa;
-var i : real;
-
-procedure DoSomething; 
-var 
-  x : integer;
-  x1 : integer;
-begin
-end;
+var i : integer;
+ 
 
 begin
-    i := 2;
+    (*i := not (false and true or false) or (not (1 < 2));*)
+    i := - 1;
 end.
