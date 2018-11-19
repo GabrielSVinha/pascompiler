@@ -26,6 +26,9 @@ public class Type {
 		this.width = width;
 		this.val = val;
 	}
+	public Type() {
+		
+	}
 	
 	public int getWidth() {
 		return width;
@@ -46,6 +49,7 @@ public class Type {
 		types.put(SHORTINT+"", new Type(SHORTINT, 1, "integer"));
 		types.put(STRING+"", new Type(STRING, 8, "string"));
 		types.put(BOOLEAN+"", new Type(BOOLEAN, 1, "boolean"));
+		types.put(FUNCAO+"", new Type(FUNCAO, 93, "function"));
 		types.put(TIPO_VOID+"", new Type(TIPO_VOID, 0, "void"));
 		types.put(NIL+"", new Type(NIL, 0, "nil"));
 		types.put(ERRO+"", new Type(ERRO, 0, "error"));

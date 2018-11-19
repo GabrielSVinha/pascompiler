@@ -197,18 +197,43 @@ block ::= BEGIN;
 block_end ::= END SEMI;
 
 procedure_def_part ::= procedure_declaration variable_def_part procedure_body;
-procedure_declaration ::= PROCEDURE identifier parameters_list SEMI;
+procedure_declaration ::= PROCEDURE identifier:id parameters_list:pl SEMI {:
+	ProcedureType p = new ProcedureType();
+	List<Type> l = (List<Type>)pl; 
+	p.addParams(l);
+	if (! SymbolTable.insert(id.toLowerCase(), new SymbolImpl(id, p))){
+		parser.report_error("Duplicate name ", "ERROR");
+	}
+:};
 procedure_body ::= block stmt_def_part block_end;
 
 function_def_part ::= function_declaration function_body;
-function_declaration ::= FUNCTION identifier parameters_list COLON type_def SEMI;
+function_declaration ::= FUNCTION identifier parameters_list COLON type_def SEMI {:
+:};
 function_body ::= block stmt_def_part block_end;
 
-parameters_list ::= LPAREN parameters RPAREN;
+parameters_list ::= LPAREN parameters:p RPAREN {:
+	RESULT = p;
+:};
 parameters_list ::= ;
-parameter ::= identifier_list COLON type_def;
-parameters ::= parameter SEMI parameters;
-parameters ::= parameter;
+parameter ::= identifier_list:il COLON type_def:t {:
+	List<Type> params = new ArrayList();
+	for (String i: il){
+		params.add((Type)t);
+		if(! SymbolTable.insert(i.toLowerCase(), new SymbolImpl(i, (Type)t))){
+			parser.report_error("Duplicate name ", "ERROR");
+		}
+	}
+    RESULT = params;
+:};
+parameters ::= parameter:p SEMI parameters:pl {:
+	List<Type> aux = (List)pl;
+	aux.addAll((List<Type>)p);
+	RESULT = aux;
+:};
+parameters ::= parameter:p {:
+	RESULT = p;
+:};
 
 call ::= identifier LPAREN args RPAREN SEMI;
 args ::= exp;

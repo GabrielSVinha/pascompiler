@@ -1,6 +1,13 @@
 Program aaa;
 var i : integer;
  
+procedure troca(valor_1, valor_2: integer; x: string; y: string);
+var aux: integer;
+begin
+	aux := valor_1;
+    valor_1 := valor_2;
+    valor_2 := aux;
+end;
 
 begin
     (*i := not (false and true or false) or (not (1 < 2));*)
