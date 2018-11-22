@@ -207,8 +207,15 @@ procedure_declaration ::= PROCEDURE identifier:id parameters_list:pl SEMI {:
 :};
 procedure_body ::= block stmt_def_part block_end;
 
-function_def_part ::= function_declaration function_body;
-function_declaration ::= FUNCTION identifier parameters_list COLON type_def SEMI {:
+function_def_part ::= function_declaration variable_def_part function_body;
+function_declaration ::= FUNCTION identifier:id parameters_list:pl COLON type_def:td SEMI{:
+	Type returnType = (Type)td;
+	FunctionType p = new FunctionType(returnType);
+	List<Type> l = (List<Type>)pl; 
+	p.addParams(l);
+	if (! SymbolTable.insert(id.toLowerCase(), new SymbolImpl(id, p))){
+		parser.report_error("Duplicate name ", "ERROR");
+	}
 :};
 function_body ::= block stmt_def_part block_end;
 

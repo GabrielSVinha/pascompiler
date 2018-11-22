@@ -1,7 +1,7 @@
 Program aaa;
 var i : integer;
  
-procedure troca(valor_1, valor_2: integer; x: string; y: string);
+function troca(valor_1, valor_2: integer): Boolean;
 var aux: integer;
 begin
 	aux := valor_1;
