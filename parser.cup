@@ -242,9 +242,32 @@ parameters ::= parameter:p {:
 	RESULT = p;
 :};
 
-call ::= identifier LPAREN args RPAREN SEMI;
-args ::= exp;
-args ::= args COMMA exp;
+call ::= identifier:id LPAREN args:al RPAREN SEMI {:
+	SymbolImpl s = SymbolTable.get(id);	
+	if (s == null) {
+		parser.report_error("Undeclared function ", "ERROR");
+	}
+	List<Exp> arg_list = (List<Exp>)al;
+	FunctionType f = (FunctionType)s.getType();
+	for (int i=0; i < f.parameters.size(); i++){
+		if (f.parameters.get(i) != arg_list.get(i).type){
+			parser.report_error("Invalid parameter ", "ERROR");
+		}
+	}
+	RESULT = f;
+:};
+args ::= exp:ex {:
+	List<Exp> a = new ArrayList();
+	Exp e = (Exp)ex;
+	a.add(e);
+	RESULT = a;
+:};
+args ::= args:a COMMA exp:ex {:
+	Exp e = (Exp)ex;
+	List<Exp> arg_list = (List<Exp>)a;
+	arg_list.add(e);
+	RESULT = arg_list;
+:};
 
 exp_part ::= exp:ex {:
 	Exp e = (Exp)ex;
@@ -379,6 +402,14 @@ variable_def ::= error {: parser.report_error("","expected ';' before token"); :
 attr ::= identifier:id assign_operator exp_part:ex SEMI{:
 	Exp e = (Exp)ex;
     parser.checkCompatibleTypes(SymbolTable.get(id).getType(), e.type);
+:};
+attr ::= identifier:id assign_operator call:c {:
+	SymbolImpl s = SymbolTable.get(id.toLowerCase());
+	if (s == null) {
+		parser.report_error("Undeclared variable ", "ERROR");
+	}
+	FunctionType f = (FunctionType)c;
+	parser.checkCompatibleTypes(s.getType(), f.returnType);
 :};
 attr ::= identifier assign_operator error {: parser.report_error("Error in expression ", "ERROR"); :};
 
