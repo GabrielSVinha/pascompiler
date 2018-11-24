@@ -18,6 +18,7 @@ import symbolTable.*;
 parser code {:
   protected Lexer lexer;
   public static int errors = 0;
+  public static StringBuffer code = new StringBuffer();
 
   public void report_error(String message, Object info){
     if (info instanceof String){
@@ -100,12 +101,12 @@ terminal Integer    INTEGER_LITERAL;
 terminal Float      FLOAT_LITERAL;
 terminal Boolean    BOOLEAN_LITERAL;
 terminal String     STRING_LITERAL;
-terminal			VAR, COLON, COMMA, CONST;
+terminal            VAR, COLON, COMMA, CONST;
 terminal            GT, LT, LE, GE, DIFF, NOT, AND, OR, XOR;
-terminal			BOOL, INT, STRING, REAL;
-terminal			EQUAL, FULLSTOP;
+terminal            BOOL, INT, STRING, REAL;
+terminal            EQUAL, FULLSTOP;
 terminal String     IDENTIFIER;
-terminal			NEWLINE, PROGRAM, BEGIN, END, PROCEDURE, FUNCTION;
+terminal            NEWLINE, PROGRAM, BEGIN, END, PROCEDURE, FUNCTION;
 terminal            FOR, TO, DOWNTO, DO;
 
 /* Non terminals */
