@@ -1,15 +1,11 @@
-Program aaa;
-var i : integer;
- 
-function troca(valor_1, valor_2: integer): integer;
-var aux: integer;
-begin
-	aux := valor_1;
-    valor_1 := valor_2;
-    valor_2 := aux;
-end;
+program forLoop;
+var
+   a, b: integer;
 
 begin
-    (*i := not (false and true or false) or (not (1 < 2));*)
-    i := troca('1', 2);
+   for a := 10  to 20 do
+
+   begin
+      b := a;
+   end;
 end.

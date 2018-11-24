@@ -40,6 +40,11 @@ parser code {:
     throw new RuntimeException("Fatal Syntax Error");
   }
 
+  public void checkTypesFor(Type t1, Type t2, Type t3){
+    if (t1.getVal().equals("integer") && t2.getVal().equals("integer") && t3.getVal().equals("integer")){return;}
+    report_error("Incompatible types in iterator variables. ", "ERROR");
+  }
+
   public void checkCompatibleTypes(Type t1, Type t2){
     if (t1.equals(t2)){return;}
     if (t1.getVal().equals("integer") && t2.getVal().equals("real")){return;}
@@ -174,7 +179,15 @@ stmt ::= for_def_part;
 stmt ::= call;
 
 
-for_designator ::= FOR control_variable equal_op initial_value direction final_value;
+for_designator ::= FOR control_variable:cv equal_op initial_value:iv direction final_value:fv {:
+	SymbolImpl symbolTableCV = SymbolTable.get(cv.toLowerCase());	
+	if (symbolTableCV == null) {
+		parser.report_error("Undeclared variable ", "ERROR");
+	}
+	Exp exIV = (Exp)iv;
+	Exp exFV = (Exp)fv;
+	parser.checkTypesFor(symbolTableCV.getType(), exIV.type, exFV.type);
+:};
 control_variable ::= identifier;
 initial_value ::= exp_part;
 direction ::= TO | DOWNTO;
