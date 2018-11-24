@@ -22,16 +22,16 @@ parser code {:
 
   public void report_error(String message, Object info){
     if (info instanceof String){
-	errors++; 
+	  errors++;
       System.err.println("  "+ errors + "==> " + info + " "+ message +
 							"near " + lexer.current_lexeme());
-    }
-    else {
-    	StringBuffer m = new StringBuffer("Error ");
-    	if (info instanceof java_cup.runtime.Symbol) 
-     	   m.append( "("+info.toString()+")" );     
-    	m.append(" : "+message);   
-    	System.err.println(m);
+    } else {
+      StringBuffer m = new StringBuffer("Error ");
+      if (info instanceof java_cup.runtime.Symbol){
+        m.append( "("+info.toString()+")" );
+        m.append(" : "+message);
+        System.err.println(m);
+      }
     }
   }
 
@@ -47,35 +47,34 @@ parser code {:
     report_error("Incompatible types ", "ERROR");
   }
 
-	public Type checkRelationalExp(Type e1, Type e2, String op){
-		if (op.equals("<>")){
-				if (!(e1.equals(e2))){
-					report_error("Incompatible types", "ERROR");
-				}
-		} else {
-			checkCompatibleTypes(e1, e2);
-		}
-		return Type.getType("boolean");
-	}
-
+  public Type checkRelationalExp(Type e1, Type e2, String op){
+    if (op.equals("<>")){
+      if (!(e1.equals(e2))){
+        report_error("Incompatible types", "ERROR");
+      }
+    } else {
+      checkCompatibleTypes(e1, e2);
+    }
+    return Type.getType("boolean");
+  }
 :}
 
 action code {:
-    class Exp {
-	    public Type type;
-	    public String code;
-	    public boolean isConstant;
+  class Exp {
+    public Type type;
+    public String code;
+    public boolean isConstant;
 
-	    Exp(Type t, String code) {
-  		  this(t, code, false);
-	    }
-	  
-	    Exp(Type t, String code, boolean cte) {
-		  type = t;
-		  this.code = code;
-		  isConstant = cte;
-	    }
-	}
+    Exp(Type t, String code) {
+      this(t, code, false);
+    }
+
+    Exp(Type t, String code, boolean cte) {
+      type = t;
+      this.code = code;
+      isConstant = cte;
+    }
+  }
 :};
 
 /* define how to connect to the scanner! */
@@ -111,20 +110,20 @@ terminal            FOR, TO, DOWNTO, DO;
 
 /* Non terminals */
 non terminal              initial, program_def_part, body_def_part, program_def, header_declarations;
-non terminal			  function_def_part, function_body, function_declaration; 
+non terminal              function_def_part, function_body, function_declaration; 
 non terminal              procedure_def_part, procedure_declaration, procedure_body;
 non terminal              parameter, parameters, parameters_list;
-non terminal 			  block, block_end, call, args;
+non terminal              block, block_end, call, args;
 non terminal              stmt_def_part, stmt_def_list, stmt;
 non terminal              exp_list, literal;
-non terminal 		      exp, rel_op, bool_op, log_op, bin_arim_op, un_arim_op;
-non terminal			  exp_part;
-non terminal			  variable_def, variable_def_list, variable_def_part, variable_opt_nl;
+non terminal              exp, rel_op, bool_op, log_op, bin_arim_op, un_arim_op;
+non terminal              exp_part;
+non terminal              variable_def, variable_def_list, variable_def_part, variable_opt_nl;
 non terminal              const_def, const_def_list, const_def_part;
 non terminal List<String> identifier_list;
 non terminal String   	  identifier, final_value, for_stmt;
-non terminal			  type_def, control_variable, for_def_part, initial_value, direction, for_designator;
-non terminal		      attr, assign_operator, equal_op, sum_op, minus_op, times_op, divide_op;
+non terminal              type_def, control_variable, for_def_part, initial_value, direction, for_designator;
+non terminal              attr, assign_operator, equal_op, sum_op, minus_op, times_op, divide_op;
 /* Precedences */ 
 precedence left FOR;	// Inserted by Eclipse plugin
 precedence nonassoc IDENTIFIER;	// Inserted by Eclipse plugin
