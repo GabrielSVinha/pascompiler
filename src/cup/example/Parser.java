@@ -44,8 +44,8 @@ public class Parser extends java_cup.runtime.lr_parser {
     "\002\025\004\000\002\025\003\000\002\026\003\000\002" +
     "\026\003\000\002\026\003\000\002\060\010\000\002\054" +
     "\003\000\002\056\003\000\002\057\003\000\002\057\003" +
-    "\000\002\051\003\000\002\055\005\000\002\052\005\000" +
-    "\002\052\003\000\002\055\003\000\002\050\003\000\002" +
+    "\000\002\040\003\000\002\055\005\000\002\052\005\000" +
+    "\002\052\003\000\002\055\003\000\002\051\003\000\002" +
     "\006\004\000\002\006\004\000\002\020\003\000\002\021" +
     "\004\000\002\012\005\000\002\013\006\000\002\014\005" +
     "\000\002\007\005\000\002\011\010\000\002\010\005\000" +
@@ -60,15 +60,15 @@ public class Parser extends java_cup.runtime.lr_parser {
     "\002\033\003\000\002\034\003\000\002\034\003\000\002" +
     "\034\003\000\002\035\003\000\002\035\003\000\002\035" +
     "\003\000\002\035\003\000\002\035\003\000\002\036\003" +
-    "\000\002\036\003\000\002\042\004\000\002\041\004\000" +
-    "\002\041\003\000\002\040\006\000\002\070\002\000\002" +
-    "\040\005\000\002\061\006\000\002\061\005\000\002\061" +
+    "\000\002\036\003\000\002\043\004\000\002\042\004\000" +
+    "\002\042\003\000\002\041\006\000\002\070\002\000\002" +
+    "\041\005\000\002\061\006\000\002\061\005\000\002\061" +
     "\005\000\002\062\003\000\002\062\003\000\002\062\003" +
     "\000\002\062\003\000\002\062\003\000\002\062\003\000" +
     "\002\063\004\000\002\064\004\000\002\065\004\000\002" +
-    "\066\004\000\002\067\004\000\002\047\005\000\002\047" +
+    "\066\004\000\002\067\004\000\002\050\005\000\002\050" +
     "\003\000\002\053\003\000\002\053\003\000\002\053\003" +
-    "\000\002\053\003\000\002\006\002\000\002\042\002\000" +
+    "\000\002\053\003\000\002\006\002\000\002\043\002\000" +
     "\002\030\003\000\002\030\003" });
 
   /** Access to production table. */
@@ -300,88 +300,88 @@ public class Parser extends java_cup.runtime.lr_parser {
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
     "\000\250\000\006\002\003\003\004\001\001\000\002\001" +
-    "\001\000\010\005\014\006\012\042\013\001\001\000\004" +
-    "\050\006\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\012\040\241\041\242\047\240\050\152" +
-    "\001\001\000\014\007\020\011\024\012\031\013\036\042" +
+    "\001\000\010\005\014\006\012\043\013\001\001\000\004" +
+    "\051\006\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\012\041\241\042\242\050\240\051\152" +
+    "\001\001\000\014\007\020\011\024\012\031\013\036\043" +
     "\235\001\001\000\004\006\015\001\001\000\002\001\001" +
     "\000\034\004\026\007\020\011\024\012\031\013\036\022" +
-    "\033\024\017\025\022\026\037\050\021\055\032\060\034" +
-    "\061\027\001\001\000\004\050\232\001\001\000\002\001" +
+    "\033\024\017\025\022\026\037\051\021\055\032\060\034" +
+    "\061\027\001\001\000\004\051\232\001\001\000\002\001" +
     "\001\000\002\001\001\000\016\062\176\063\204\064\207" +
     "\065\201\066\177\067\206\001\001\000\016\022\033\026" +
-    "\174\050\021\055\032\060\034\061\027\001\001\000\004" +
-    "\050\147\001\001\000\004\042\142\001\001\000\022\022" +
-    "\033\024\137\025\022\026\037\050\021\055\032\060\034" +
+    "\174\051\021\055\032\060\034\061\027\001\001\000\004" +
+    "\051\147\001\001\000\004\043\142\001\001\000\022\022" +
+    "\033\024\137\025\022\026\037\051\021\055\032\060\034" +
     "\061\027\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\006\050\050\054\051\001" +
-    "\001\000\004\042\040\001\001\000\002\001\001\000\006" +
+    "\001\001\000\002\001\001\000\006\051\050\054\051\001" +
+    "\001\000\004\043\040\001\001\000\002\001\001\000\006" +
     "\014\042\020\043\001\001\000\002\001\001\000\002\001" +
-    "\001\000\022\022\033\024\044\025\022\026\037\050\021" +
+    "\001\000\022\022\033\024\044\025\022\026\037\051\021" +
     "\055\032\060\034\061\027\001\001\000\004\021\045\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\004\063\052\001\001\000\020\030" +
-    "\070\031\057\033\064\036\067\037\060\050\063\056\065" +
+    "\070\031\057\033\064\036\067\037\060\051\063\056\065" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\010\032\105\034\075\035\116" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\014\030\070\031\130\033\064" +
-    "\036\067\050\063\001\001\000\004\057\124\001\001\000" +
+    "\036\067\051\063\001\001\000\004\057\124\001\001\000" +
     "\002\001\001\000\014\030\070\031\122\033\064\036\067" +
-    "\050\063\001\001\000\002\001\001\000\002\001\001\000" +
-    "\014\030\070\031\074\033\064\036\067\050\063\001\001" +
+    "\051\063\001\001\000\002\001\001\000\002\001\001\000" +
+    "\014\030\070\031\074\033\064\036\067\051\063\001\001" +
     "\000\002\001\001\000\010\032\105\034\075\035\116\001" +
-    "\001\000\014\030\070\031\121\033\064\036\067\050\063" +
+    "\001\000\014\030\070\031\121\033\064\036\067\051\063" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\014\030\070\031\120\033\064\036" +
-    "\067\050\063\001\001\000\002\001\001\000\002\001\001" +
+    "\067\051\063\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\014" +
-    "\030\070\031\117\033\064\036\067\050\063\001\001\000" +
+    "\030\070\031\117\033\064\036\067\051\063\001\001\000" +
     "\010\032\105\034\075\035\116\001\001\000\010\032\105" +
     "\034\075\035\116\001\001\000\010\032\105\034\075\035" +
     "\116\001\001\000\010\032\105\034\075\035\116\001\001" +
     "\000\002\001\001\000\020\030\070\031\057\033\064\036" +
-    "\067\037\127\050\063\051\126\001\001\000\002\001\001" +
+    "\067\037\127\040\126\051\063\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\010\032\105\034" +
     "\075\035\116\001\001\000\026\020\132\022\033\024\133" +
-    "\025\022\026\037\050\021\052\134\055\032\060\034\061" +
+    "\025\022\026\037\051\021\052\134\055\032\060\034\061" +
     "\027\001\001\000\022\022\033\024\135\025\022\026\037" +
-    "\050\021\055\032\060\034\061\027\001\001\000\002\001" +
+    "\051\021\055\032\060\034\061\027\001\001\000\002\001" +
     "\001\000\002\001\001\000\004\021\136\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\006\010\143\020\144\001\001\000\002\001\001" +
-    "\000\022\022\033\024\145\025\022\026\037\050\021\055" +
+    "\000\022\022\033\024\145\025\022\026\037\051\021\055" +
     "\032\060\034\061\027\001\001\000\004\021\146\001\001" +
     "\000\002\001\001\000\004\017\150\001\001\000\002\001" +
-    "\001\000\012\015\155\016\154\047\153\050\152\001\001" +
+    "\001\000\012\015\155\016\154\050\153\051\152\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\012\015\155\016\157\047\153\050\152" +
-    "\001\001\000\002\001\001\000\002\001\001\000\004\050" +
+    "\002\001\001\000\012\015\155\016\157\050\153\051\152" +
+    "\001\001\000\002\001\001\000\002\001\001\000\004\051" +
     "\170\001\001\000\004\053\166\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\004\053\172\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\020\022\225\030\070\031\057\033\064" +
-    "\036\067\037\222\050\223\001\001\000\002\001\001\000" +
+    "\036\067\037\222\051\223\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\016\023\212\030\070\031\211" +
-    "\033\064\036\067\050\063\001\001\000\010\032\105\034" +
+    "\033\064\036\067\051\063\001\001\000\010\032\105\034" +
     "\075\035\116\001\001\000\002\001\001\000\014\030\070" +
-    "\031\216\033\064\036\067\050\063\001\001\000\002\001" +
+    "\031\216\033\064\036\067\051\063\001\001\000\002\001" +
     "\001\000\002\001\001\000\010\032\105\034\075\035\116" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\004\017\233\001\001" +
     "\000\002\001\001\000\002\001\001\000\024\004\236\022" +
-    "\033\024\017\025\022\026\037\050\021\055\032\060\034" +
+    "\033\024\017\025\022\026\037\051\021\055\032\060\034" +
     "\061\027\001\001\000\002\001\001\000\004\070\247\001" +
-    "\001\000\002\001\001\000\002\001\001\000\010\040\243" +
-    "\047\240\050\152\001\001\000\002\001\001\000\004\053" +
+    "\001\000\002\001\001\000\002\001\001\000\010\041\243" +
+    "\050\240\051\152\001\001\000\002\001\001\000\004\053" +
     "\245\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001" });
 
@@ -453,25 +453,31 @@ public class Parser extends java_cup.runtime.lr_parser {
 
   protected Lexer lexer;
   public static int errors = 0;
+  public static StringBuffer code = new StringBuffer();
 
   public void report_error(String message, Object info){
     if (info instanceof String){
-	errors++; 
+	  errors++;
       System.err.println("  "+ errors + "==> " + info + " "+ message +
 							"near " + lexer.current_lexeme());
-    }
-    else {
-    	StringBuffer m = new StringBuffer("Error ");
-    	if (info instanceof java_cup.runtime.Symbol) 
-     	   m.append( "("+info.toString()+")" );     
-    	m.append(" : "+message);   
-    	System.err.println(m);
+    } else {
+      StringBuffer m = new StringBuffer("Error ");
+      if (info instanceof java_cup.runtime.Symbol){
+        m.append( "("+info.toString()+")" );
+        m.append(" : "+message);
+        System.err.println(m);
+      }
     }
   }
 
   public void report_fatal_error(String message, Object info) {
     report_error(message, info);
     throw new RuntimeException("Fatal Syntax Error");
+  }
+
+  public void checkEqualTypes(Type t1, Type t2){
+    if (t1.equals(t2)){return;}
+    report_error("Incompatible types. ", "ERROR");
   }
 
   public void checkCompatibleTypes(Type t1, Type t2){
@@ -481,17 +487,16 @@ public class Parser extends java_cup.runtime.lr_parser {
     report_error("Incompatible types ", "ERROR");
   }
 
-	public Type checkRelationalExp(Type e1, Type e2, String op){
-		if (op.equals("<>")){
-				if (!(e1.equals(e2))){
-					report_error("Incompatible types", "ERROR");
-				}
-		} else {
-			checkCompatibleTypes(e1, e2);
-		}
-		return Type.getType("boolean");
-	}
-
+  public Type checkRelationalExp(Type e1, Type e2, String op){
+    if (op.equals("<>")){
+      if (!(e1.equals(e2))){
+        report_error("Incompatible types", "ERROR");
+      }
+    } else {
+      checkCompatibleTypes(e1, e2);
+    }
+    return Type.getType("boolean");
+  }
 
 
 /** Cup generated class to encapsulate user supplied action code.*/
@@ -500,21 +505,21 @@ class CUP$Parser$actions {
 
 //@@CUPDBG1
 
-    class Exp {
-	    public Type type;
-	    public String code;
-	    public boolean isConstant;
+  class Exp {
+    public Type type;
+    public String code;
+    public boolean isConstant;
 
-	    Exp(Type t, String code) {
-  		  this(t, code, false);
-	    }
-	  
-	    Exp(Type t, String code, boolean cte) {
-		  type = t;
-		  this.code = code;
-		  isConstant = cte;
-	    }
-	}
+    Exp(Type t, String code) {
+      this(t, code, false);
+    }
+
+    Exp(Type t, String code, boolean cte) {
+      type = t;
+      this.code = code;
+      isConstant = cte;
+    }
+  }
 
   private final Parser parser;
 
@@ -672,6 +677,27 @@ class CUP$Parser$actions {
           case 14: // for_designator ::= FOR control_variable equal_op initial_value direction final_value 
             {
               Object RESULT =null;
+		Location cvxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).xleft;
+		Location cvxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).xright;
+		Object cv = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
+		Location ivxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xleft;
+		Location ivxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xright;
+		Object iv = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		Location fvxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
+		Location fvxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
+		Object fv = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		//@@CUPDBG4
+
+	SymbolImpl symbolTableCV = SymbolTable.get(cv.toString());
+	if (symbolTableCV == null) {
+		parser.report_error("Undeclared variable ", "ERROR");
+	}
+	Exp exIV = (Exp)iv;
+	Exp exFV = (Exp)fv;
+	parser.checkEqualTypes(exIV.type, Type.getType("integer"));
+	parser.checkEqualTypes(exFV.type, Type.getType("integer"));
+	parser.checkEqualTypes(symbolTableCV.getType(), Type.getType("integer"));
+	//parser.checkTypesFor(symbolTableCV.getType(), exIV.type, exFV.type);
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("for_designator",46, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -681,6 +707,12 @@ class CUP$Parser$actions {
           case 15: // control_variable ::= identifier 
             {
               Object RESULT =null;
+		Location idxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
+		Location idxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
+		String id = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		//@@CUPDBG5
+
+	RESULT = id.toString();
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("control_variable",42, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -690,6 +722,13 @@ class CUP$Parser$actions {
           case 16: // initial_value ::= exp_part 
             {
               Object RESULT =null;
+		Location exleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
+		Location exright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		//@@CUPDBG6
+
+	Exp exp = (Exp)e;
+	RESULT = exp;
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("initial_value",44, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -716,9 +755,16 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 19: // final_value ::= exp_part 
             {
-              String RESULT =null;
+              Object RESULT =null;
+		Location exleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
+		Location exright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		//@@CUPDBG7
 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("final_value",39, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+	Exp exp = (Exp)e;
+	RESULT = exp;
+
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("final_value",30, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
@@ -753,7 +799,7 @@ class CUP$Parser$actions {
           case 23: // for_def_part ::= error 
             {
               Object RESULT =null;
-		//@@CUPDBG4
+		//@@CUPDBG8
 parser.report_error("Error in for definition ", "ERROR"); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("for_def_part",43, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -766,11 +812,11 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location xxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location xxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		String x = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG5
+		//@@CUPDBG9
 
 	RESULT = x;
 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("identifier",38, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("identifier",39, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
@@ -829,7 +875,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location plxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
 		Location plxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
 		Object pl = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		//@@CUPDBG6
+		//@@CUPDBG10
 
 	ProcedureType p = new ProcedureType();
 	List<Type> l = (List<Type>)pl; 
@@ -873,7 +919,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location tdxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
 		Location tdxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
 		Object td = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		//@@CUPDBG7
+		//@@CUPDBG11
 
 	Type returnType = (Type)td;
 	FunctionType p = new FunctionType(returnType);
@@ -903,7 +949,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location pxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
 		Location pxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
 		Object p = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		//@@CUPDBG8
+		//@@CUPDBG12
 
 	RESULT = p;
 
@@ -930,7 +976,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location txleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location txright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object t = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG9
+		//@@CUPDBG13
 
 	List<Type> params = new ArrayList();
 	for (String i: il){
@@ -955,7 +1001,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location plxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location plxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object pl = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG10
+		//@@CUPDBG14
 
 	List<Type> aux = (List)pl;
 	aux.addAll((List<Type>)p);
@@ -972,7 +1018,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location pxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location pxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object p = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG11
+		//@@CUPDBG15
 
 	RESULT = p;
 
@@ -990,7 +1036,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location alxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xleft;
 		Location alxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xright;
 		Object al = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
-		//@@CUPDBG12
+		//@@CUPDBG16
 
 	SymbolImpl s = SymbolTable.get(id);	
 	if (s == null) {
@@ -1016,7 +1062,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location exxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location exxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object ex = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG13
+		//@@CUPDBG17
 
 	List<Exp> a = new ArrayList();
 	Exp e = (Exp)ex;
@@ -1037,7 +1083,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location exxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location exxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object ex = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG14
+		//@@CUPDBG18
 
 	Exp e = (Exp)ex;
 	List<Exp> arg_list = (List<Exp>)a;
@@ -1055,7 +1101,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location exxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location exxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object ex = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG15
+		//@@CUPDBG19
 
 	Exp e = (Exp)ex;
 	RESULT = new Exp(e.type, e.code);
@@ -1071,7 +1117,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location lxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location lxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object l = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG16
+		//@@CUPDBG20
 
 	Exp e;
     if (l instanceof Integer) {
@@ -1099,7 +1145,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location idxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location idxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		String id = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG17
+		//@@CUPDBG21
 
 	RESULT = new Exp(SymbolTable.get(id).getType(), id);
 
@@ -1111,7 +1157,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 46: // exp ::= exp error 
             {
               Object RESULT =null;
-		//@@CUPDBG18
+		//@@CUPDBG22
  parser.report_error("Missing operand ", "ERROR"); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("exp",23, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -1127,7 +1173,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location e1xleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location e1xright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object e1 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG19
+		//@@CUPDBG23
 
 	Exp ex1 = (Exp)e1;
 	parser.checkCompatibleTypes(ex1.type, Type.getType("boolean"));
@@ -1150,7 +1196,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location e2xleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location e2xright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG20
+		//@@CUPDBG24
 
 	Exp ex1 = (Exp)e1;
 	Exp ex2 = (Exp)e2;
@@ -1172,7 +1218,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location e1xleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location e1xright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object e1 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG21
+		//@@CUPDBG25
 
 	Exp ex1 = (Exp)e1;
 	parser.checkCompatibleTypes(ex1.type, Type.getType("integer"));
@@ -1195,7 +1241,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location e2xleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location e2xright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG22
+		//@@CUPDBG26
 
 	Exp ex1 = (Exp)e1;
 	Exp ex2 = (Exp)e2;
@@ -1219,7 +1265,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location e2xleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location e2xright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG23
+		//@@CUPDBG27
 
 	Exp ex1 = (Exp)e1;
 	Exp ex2 = (Exp)e2;
@@ -1236,7 +1282,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location exxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
 		Location exxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
 		Object ex = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		//@@CUPDBG24
+		//@@CUPDBG28
 
 	Exp e = (Exp)ex;
 	RESULT = new Exp(e.type, e.code);
@@ -1252,7 +1298,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location ilxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location ilxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Integer il = (Integer)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG25
+		//@@CUPDBG29
 
 	RESULT = il;
 
@@ -1267,7 +1313,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location blxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location blxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Boolean bl = (Boolean)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG26
+		//@@CUPDBG30
 
 	RESULT = bl;
 
@@ -1282,7 +1328,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location slxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location slxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		String sl = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG27
+		//@@CUPDBG31
 
 	RESULT = sl;
 
@@ -1294,7 +1340,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 56: // rel_op ::= GT 
             {
               Object RESULT =null;
-		//@@CUPDBG28
+		//@@CUPDBG32
 
     RESULT = ">";
 
@@ -1306,7 +1352,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 57: // rel_op ::= LT 
             {
               Object RESULT =null;
-		//@@CUPDBG29
+		//@@CUPDBG33
 
     RESULT = "<";
 
@@ -1318,7 +1364,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 58: // rel_op ::= GE 
             {
               Object RESULT =null;
-		//@@CUPDBG30
+		//@@CUPDBG34
 
     RESULT = ">=";
 
@@ -1330,7 +1376,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 59: // rel_op ::= LE 
             {
               Object RESULT =null;
-		//@@CUPDBG31
+		//@@CUPDBG35
 
     RESULT = "<=";
 
@@ -1342,7 +1388,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 60: // rel_op ::= DIFF 
             {
               Object RESULT =null;
-		//@@CUPDBG32
+		//@@CUPDBG36
 
     RESULT = "<>";
 
@@ -1354,7 +1400,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 61: // bool_op ::= NOT 
             {
               Object RESULT =null;
-		//@@CUPDBG33
+		//@@CUPDBG37
 
     RESULT = "not";
 
@@ -1366,7 +1412,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 62: // log_op ::= AND 
             {
               Object RESULT =null;
-		//@@CUPDBG34
+		//@@CUPDBG38
 
     RESULT = "and";
 
@@ -1378,7 +1424,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 63: // log_op ::= XOR 
             {
               Object RESULT =null;
-		//@@CUPDBG35
+		//@@CUPDBG39
 
     RESULT = "xor";
 
@@ -1390,7 +1436,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 64: // log_op ::= OR 
             {
               Object RESULT =null;
-		//@@CUPDBG36
+		//@@CUPDBG40
 
     RESULT = "or";
 
@@ -1402,7 +1448,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 65: // bin_arim_op ::= PLUS 
             {
               Object RESULT =null;
-		//@@CUPDBG37
+		//@@CUPDBG41
 
     RESULT = "+";
 
@@ -1414,7 +1460,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 66: // bin_arim_op ::= MINUS 
             {
               Object RESULT =null;
-		//@@CUPDBG38
+		//@@CUPDBG42
 
     RESULT = "-";
 
@@ -1426,7 +1472,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 67: // bin_arim_op ::= TIMES 
             {
               Object RESULT =null;
-		//@@CUPDBG39
+		//@@CUPDBG43
 
     RESULT = "*";
 
@@ -1438,7 +1484,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 68: // bin_arim_op ::= DIVIDE 
             {
               Object RESULT =null;
-		//@@CUPDBG40
+		//@@CUPDBG44
 
     RESULT = "/";
 
@@ -1450,7 +1496,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 69: // bin_arim_op ::= MOD 
             {
               Object RESULT =null;
-		//@@CUPDBG41
+		//@@CUPDBG45
 
     RESULT = "mod";
 
@@ -1481,7 +1527,7 @@ parser.report_error("Error in for definition ", "ERROR");
             {
               Object RESULT =null;
 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("variable_def_part",32, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("variable_def_part",33, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
@@ -1490,7 +1536,7 @@ parser.report_error("Error in for definition ", "ERROR");
             {
               Object RESULT =null;
 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("variable_def_list",31, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("variable_def_list",32, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
@@ -1499,7 +1545,7 @@ parser.report_error("Error in for definition ", "ERROR");
             {
               Object RESULT =null;
 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("variable_def_list",31, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("variable_def_list",32, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
@@ -1513,7 +1559,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location tdxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
 		Location tdxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
 		Object td = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		//@@CUPDBG42
+		//@@CUPDBG46
 
 	for (String id: il){
 		if(!SymbolTable.insert(id.toLowerCase(), new SymbolImpl(id, (Type)td))) {
@@ -1521,7 +1567,7 @@ parser.report_error("Error in for definition ", "ERROR");
 	    }
 	}
 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("variable_def",30, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("variable_def",31, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
@@ -1529,7 +1575,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 76: // NT$0 ::= 
             {
               Object RESULT =null;
-//@@CUPDBG43
+//@@CUPDBG47
  parser.report_error("","expected ';' before token"); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("NT$0",54, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -1542,7 +1588,7 @@ parser.report_error("Error in for definition ", "ERROR");
               // propagate RESULT from NT$0
                 RESULT = (Object) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("variable_def",30, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("variable_def",31, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
@@ -1556,7 +1602,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location exxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
 		Location exxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
 		Object ex = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		//@@CUPDBG44
+		//@@CUPDBG48
 
 	Exp e = (Exp)ex;
     parser.checkCompatibleTypes(SymbolTable.get(id).getType(), e.type);
@@ -1575,7 +1621,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location cxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location cxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG45
+		//@@CUPDBG49
 
 	SymbolImpl s = SymbolTable.get(id.toLowerCase());
 	if (s == null) {
@@ -1592,7 +1638,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 80: // attr ::= identifier assign_operator error 
             {
               Object RESULT =null;
-		//@@CUPDBG46
+		//@@CUPDBG50
  parser.report_error("Error in expression ", "ERROR"); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("attr",47, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -1602,7 +1648,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 81: // assign_operator ::= error 
             {
               Object RESULT =null;
-		//@@CUPDBG47
+		//@@CUPDBG51
  parser.report_error("Expected symbol before = ", "ERROR"); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("assign_operator",48, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -1708,12 +1754,12 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location idxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location idxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		String id = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG48
+		//@@CUPDBG52
 
 	il.add(id.toLowerCase());
 	RESULT = il;
 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("identifier_list",37, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("identifier_list",38, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
@@ -1724,13 +1770,13 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location idxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location idxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		String id = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG49
+		//@@CUPDBG53
 
 	List<String> il = new ArrayList<String>();
    	il.add(id.toLowerCase());
    	RESULT = il;
 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("identifier_list",37, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("identifier_list",38, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
@@ -1738,7 +1784,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 94: // type_def ::= STRING 
             {
               Object RESULT =null;
-		//@@CUPDBG50
+		//@@CUPDBG54
 
 	RESULT = Type.getType("string");
 
@@ -1750,7 +1796,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 95: // type_def ::= BOOL 
             {
               Object RESULT =null;
-		//@@CUPDBG51
+		//@@CUPDBG55
 
 	RESULT = Type.getType("boolean");
 
@@ -1762,7 +1808,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 96: // type_def ::= INT 
             {
               Object RESULT =null;
-		//@@CUPDBG52
+		//@@CUPDBG56
 
 	RESULT = Type.getType("integer");
 
@@ -1774,7 +1820,7 @@ parser.report_error("Error in for definition ", "ERROR");
           case 97: // type_def ::= REAL 
             {
               Object RESULT =null;
-		//@@CUPDBG53
+		//@@CUPDBG57
 
 	RESULT = Type.getType("real");
 
@@ -1796,7 +1842,7 @@ parser.report_error("Error in for definition ", "ERROR");
             {
               Object RESULT =null;
 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("variable_def_part",32, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("variable_def_part",33, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
@@ -1807,7 +1853,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location rlxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location rlxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Float rl = (Float)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG54
+		//@@CUPDBG58
 
 	RESULT = rl;
 
@@ -1822,7 +1868,7 @@ parser.report_error("Error in for definition ", "ERROR");
 		Location flxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location flxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Float fl = (Float)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		//@@CUPDBG55
+		//@@CUPDBG59
 
 	RESULT = fl;
 

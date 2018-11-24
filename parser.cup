@@ -40,9 +40,9 @@ parser code {:
     throw new RuntimeException("Fatal Syntax Error");
   }
 
-  public void checkTypesFor(Type t1, Type t2, Type t3){
-    if (t1.getVal().equals("integer") && t2.getVal().equals("integer") && t3.getVal().equals("integer")){return;}
-    report_error("Incompatible types in iterator variables. ", "ERROR");
+  public void checkEqualTypes(Type t1, Type t2){
+    if (t1.equals(t2)){return;}
+    report_error("Incompatible types. ", "ERROR");
   }
 
   public void checkCompatibleTypes(Type t1, Type t2){
@@ -122,11 +122,11 @@ non terminal              block, block_end, call, args;
 non terminal              stmt_def_part, stmt_def_list, stmt;
 non terminal              exp_list, literal;
 non terminal              exp, rel_op, bool_op, log_op, bin_arim_op, un_arim_op;
-non terminal              exp_part;
+non terminal              exp_part, final_value;
 non terminal              variable_def, variable_def_list, variable_def_part, variable_opt_nl;
 non terminal              const_def, const_def_list, const_def_part;
 non terminal List<String> identifier_list;
-non terminal String   	  identifier, final_value, for_stmt;
+non terminal String   	  identifier, for_stmt;
 non terminal              type_def, control_variable, for_def_part, initial_value, direction, for_designator;
 non terminal              attr, assign_operator, equal_op, sum_op, minus_op, times_op, divide_op;
 /* Precedences */ 
@@ -180,18 +180,28 @@ stmt ::= call;
 
 
 for_designator ::= FOR control_variable:cv equal_op initial_value:iv direction final_value:fv {:
-	SymbolImpl symbolTableCV = SymbolTable.get(cv.toLowerCase());	
+	SymbolImpl symbolTableCV = SymbolTable.get(cv.toString());
 	if (symbolTableCV == null) {
 		parser.report_error("Undeclared variable ", "ERROR");
 	}
 	Exp exIV = (Exp)iv;
 	Exp exFV = (Exp)fv;
-	parser.checkTypesFor(symbolTableCV.getType(), exIV.type, exFV.type);
+	parser.checkEqualTypes(exIV.type, Type.getType("integer"));
+	parser.checkEqualTypes(exFV.type, Type.getType("integer"));
+	parser.checkEqualTypes(symbolTableCV.getType(), Type.getType("integer"));
 :};
-control_variable ::= identifier;
-initial_value ::= exp_part;
+control_variable ::= identifier:id {:
+	RESULT = id.toString();
+:};
+initial_value ::= exp_part:e {:
+	Exp exp = (Exp)e;
+	RESULT = exp;
+:};
 direction ::= TO | DOWNTO;
-final_value ::= exp_part;
+final_value ::= exp_part:e {:
+	Exp exp = (Exp)e;
+	RESULT = exp;
+:};
 
 for_def_part ::= for_designator DO for_stmt ;
 for_stmt ::= block stmt_def_part block_end;

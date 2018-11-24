@@ -1,12 +1,18 @@
-program one;
-var
-  i: integer;
-begin
-  var tmp: boolean;
-  for i := 5 to 5 do
-  begin
-    tmp := true;
-    writeLn(i);
-  end;
-end.
+Program aaa;
 
+(*
+var Counter : integer; 
+Begin
+	for Counter := 1 to 7 do Writeln('for loop');
+End.
+*)
+var
+   a, b: integer;
+
+begin
+   for a := 10 downto 20 do
+
+   begin
+      b := a;
+   end;
+end.
