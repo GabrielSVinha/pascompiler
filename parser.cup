@@ -128,7 +128,7 @@ non terminal              const_def, const_def_list, const_def_part;
 non terminal List<String> identifier_list;
 non terminal String   	  identifier, for_stmt;
 non terminal              type_def, control_variable, for_def_part, initial_value, direction, for_designator;
-non terminal              attr, assign_operator, equal_op, sum_op, minus_op, times_op, divide_op;
+non terminal              attr, assign_operator, equal_op, sum_op, minus_op, times_op, divide_op, only_equal_op;
 /* Precedences */ 
 precedence left FOR;	// Inserted by Eclipse plugin
 precedence nonassoc IDENTIFIER;	// Inserted by Eclipse plugin
@@ -168,7 +168,7 @@ program_def ::= header_declarations variable_def_part body_def_part;
 
 program_def_part ::= PROGRAM identifier SEMI;
 
-type_def_part ::= TYPE;
+type_def_part ::= TYPE identifier assign_operator SEMI;
 
 body_def_part ::= BEGIN stmt_def_part END FULLSTOP;
 body_def_part ::= stmt_def_part END FULLSTOP;
@@ -444,13 +444,15 @@ assign_operator ::= equal_op;
 assign_operator ::= sum_op;
 assign_operator ::= minus_op;
 assign_operator ::= times_op;
-assign_operator ::= divide_op; 
+assign_operator ::= divide_op;
+assign_operator ::= only_equal_op;
 
 equal_op ::= COLON EQUAL;
 sum_op  ::= PLUS EQUAL;
 minus_op  ::= MINUS EQUAL;
 times_op ::= TIMES EQUAL;
 divide_op ::= DIVIDE EQUAL;
+only_equal_op ::= EQUAL;
 
 identifier_list ::= identifier_list:il COMMA identifier:id {:
 	il.add(id.toLowerCase());

@@ -1,5 +1,6 @@
 program forLoop;
 type
+d = ;
 
 var
    a, b: integer;
