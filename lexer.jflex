@@ -147,6 +147,7 @@ Z = [zZ]
   {BooleanLiteral} { return symbolFactory.newSymbol("BOOLEAN_LITERAL", BOOLEAN_LITERAL, Boolean.valueOf(yytext())); }
   {StringLiteral} { return symbolFactory.newSymbol("STRING_LITERAL", STRING_LITERAL, yytext()); }
   {V}{A}{R}       { return symbolFactory.newSymbol("VAR", VAR); }
+  {T}{Y}{P}{E}    { return symbolFactory.newSymbol("TYPE", TYPE); }
   {C}{O}{N}{S}{T} { return symbolFactory.newSymbol("CONST", CONST); }
   {I}"nteger"     { return symbolFactory.newSymbol("INT", INT); }
   {R}"eal"        { return symbolFactory.newSymbol("REAL", REAL); }
