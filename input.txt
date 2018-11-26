@@ -1,6 +1,6 @@
 program forLoop;
 type
-d = ;
+d = (x, y, z);
 
 var
    a, b: integer;

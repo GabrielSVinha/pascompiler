@@ -117,7 +117,7 @@ terminal            FOR, TO, DOWNTO, DO;
 non terminal              initial, program_def_part, body_def_part, program_def, header_declarations, type_def_part;
 non terminal              function_def_part, function_body, function_declaration; 
 non terminal              procedure_def_part, procedure_declaration, procedure_body;
-non terminal              parameter, parameters, parameters_list;
+non terminal              parameter, parameters, parameters_list, set_items, set_item;
 non terminal              block, block_end, call, args;
 non terminal              stmt_def_part, stmt_def_list, stmt;
 non terminal              exp_list, literal;
@@ -168,7 +168,10 @@ program_def ::= header_declarations variable_def_part body_def_part;
 
 program_def_part ::= PROGRAM identifier SEMI;
 
-type_def_part ::= TYPE identifier assign_operator SEMI;
+type_def_part ::= TYPE identifier assign_operator LPAREN set_items RPAREN SEMI;
+set_items ::= set_items COMMA set_item;
+set_items ::= set_item;
+set_item ::= identifier;
 
 body_def_part ::= BEGIN stmt_def_part END FULLSTOP;
 body_def_part ::= stmt_def_part END FULLSTOP;
