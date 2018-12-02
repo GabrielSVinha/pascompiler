@@ -162,19 +162,32 @@ precedence left DIVIDE;
 start with initial;
 /* The grammar rules */
 
-initial ::= program_def_part program_def;
+initial ::= program_def_part program_def {:
+	parser.code.append("\t HALT \n\n");
+:};
 program_def ::= type_def_part variable_def_part header_declarations body_def_part;
-program_def ::= header_declarations variable_def_part body_def_part;
+program_def ::=  variable_def_part body_def_part;
 
-program_def_part ::= PROGRAM identifier SEMI;
+program_def_part ::= PROGRAM identifier:id SEMI{:
+	parser.code.append("; Codigo assembly simples para "+id+".\n"); 
+	parser.code.append("; Os registradores R0...Rn sao argumentos de funcoes/procedimentos.\n");
+	parser.code.append("; O registrador V0 guarda retorno de funcoes.\n");
+	parser.code.append("; O registrador SP sala a pilha de execucao.\n\n"); 
+	parser.code.append("\t LD SP , #stackStart\n"); 
+	parser.code.append("\t BR main \n"); 
+:};
 
 type_def_part ::= TYPE identifier assign_operator LPAREN set_items RPAREN SEMI;
 set_items ::= set_items COMMA set_item;
 set_items ::= set_item;
 set_item ::= identifier;
 
-body_def_part ::= BEGIN stmt_def_part END FULLSTOP;
-body_def_part ::= stmt_def_part END FULLSTOP;
+body_def_part ::= BEGIN  {:
+	parser.code.append("main: \n");
+:} stmt_def_part END FULLSTOP;
+body_def_part ::=  {:
+	parser.code.append("main: \n");
+:} stmt_def_part END FULLSTOP;
 
 stmt_def_part ::= stmt_def_list | ;
 stmt_def_list ::= stmt_def_list stmt;
@@ -342,7 +355,10 @@ exp ::= exp:e1 bin_arim_op:op exp:e2 {:
 	Exp ex1 = (Exp)e1;
 	Exp ex2 = (Exp)e2;
 	parser.checkCompatibleTypes(ex1.type, ex2.type);
-	RESULT = new Exp(Type.max(ex1.type, ex2.type), ex1.code + (String)op + ex2.code);
+    if (op == "+"){
+		parser.code.append("\t ADD R1 "+ex1.code+", "+ex2.code+"\n");
+	}
+	RESULT = new Exp(Type.max(ex1.type, ex2.type), "R1");
 :};
 exp ::= exp:e1 rel_op:op exp:e2 {:
 	Exp ex1 = (Exp)e1;
@@ -430,6 +446,7 @@ variable_def ::= error {: parser.report_error("","expected ';' before token"); :
 attr ::= identifier:id assign_operator exp_part:ex SEMI{:
 	Exp e = (Exp)ex;
     parser.checkCompatibleTypes(SymbolTable.get(id).getType(), e.type);
+	parser.code.append("\t ST "+id+", "+e.code+"\n");
 :};
 attr ::= identifier:id assign_operator call:c {:
 	SymbolImpl s = SymbolTable.get(id.toLowerCase());
@@ -438,8 +455,11 @@ attr ::= identifier:id assign_operator call:c {:
 	}
 	FunctionType f = (FunctionType)c;
 	parser.checkCompatibleTypes(s.getType(), f.returnType);
+	
 :};
-attr ::= identifier assign_operator error {: parser.report_error("Error in expression ", "ERROR"); :};
+attr ::= identifier assign_operator error {: 
+	parser.report_error("Error in expression ", "ERROR"); 
+:};
 
 assign_operator ::= error {: parser.report_error("Expected symbol before = ", "ERROR"); :};
 
