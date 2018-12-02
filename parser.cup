@@ -52,6 +52,29 @@ parser code {:
     report_error("Incompatible types ", "ERROR");
   }
 
+  public String assemblyOperation(String op){
+    if(op.equals("-")) {
+	  return "SUB";
+	}
+	else if(op.equals("+")) {
+	  return "ADD";
+	}
+	else if(op.equals("*")) {
+	  return "MUL";
+	} else if(op.equals("and")) {
+	  return "AND";
+	} else if(op.equals("OR")) {
+	  return "OR";
+	} else if(op.equals("XOR")) {
+	  return "XOR";
+	}
+
+	else if(op.equals("/") || op.toLowerCase().equals("div")) {
+	  return "DIV";
+	}
+    return "";
+  }
+
   public Type checkRelationalExp(Type e1, Type e2, String op){
     if (op.equals("<>")){
       if (!(e1.equals(e2))){
@@ -331,38 +354,42 @@ exp ::= literal:l {:
 	RESULT = e;
 :};
 exp ::= identifier:id {:
-	RESULT = new Exp(SymbolTable.get(id).getType(), id);
+	parser.code.append("\t LD R2, "+id+"\n"); // change register in every id
+	RESULT = new Exp(SymbolTable.get(id).getType(), "R2");
 :};
 exp ::= exp error {: parser.report_error("Missing operand ", "ERROR"); :};
 exp ::= bool_op:op exp:e1 {:
 	Exp ex1 = (Exp)e1;
 	parser.checkCompatibleTypes(ex1.type, Type.getType("boolean"));
-	RESULT = new Exp(Type.getType("boolean"), (String)op + ex1.code);
+	parser.code.append("\t NOT R1, "+ex1.code+"\n");
+	RESULT = new Exp(Type.getType("boolean"), "R1");
 :};
 exp ::= exp:e1 log_op:op exp:e2{:
 	Exp ex1 = (Exp)e1;
 	Exp ex2 = (Exp)e2;
 	parser.checkCompatibleTypes(ex1.type, Type.getType("boolean"));
 	parser.checkCompatibleTypes(ex2.type, Type.getType("boolean"));
-	RESULT = new Exp(Type.getType("boolean"), ex1.code + (String)op + ex2.code);
+	parser.code.append("\t "+parser.assemblyOperation(op.toString())+" R1, "+ex1.code+", "+ex2.code+"\n");
+	RESULT = new Exp(Type.getType("boolean"), "R1");
 :};
 exp ::= un_arim_op:op exp:e1 {:
 	Exp ex1 = (Exp)e1;
 	parser.checkCompatibleTypes(ex1.type, Type.getType("integer"));
-	RESULT = new Exp(ex1.type, (String)op + ex1.code);
+	parser.code.append("\t "+parser.assemblyOperation(op.toString())+" R1, "+ex1.code+", 0\n");
+	RESULT = new Exp(ex1.type, "R1");
 :};
 exp ::= exp:e1 bin_arim_op:op exp:e2 {:
 	Exp ex1 = (Exp)e1;
 	Exp ex2 = (Exp)e2;
 	parser.checkCompatibleTypes(ex1.type, ex2.type);
-    if (op == "+"){
-		parser.code.append("\t ADD R1 "+ex1.code+", "+ex2.code+"\n");
-	}
+	parser.code.append("\t "+parser.assemblyOperation(op.toString())+" R1, "+ex1.code+", "+ex2.code+"\n");
+
 	RESULT = new Exp(Type.max(ex1.type, ex2.type), "R1");
 :};
 exp ::= exp:e1 rel_op:op exp:e2 {:
 	Exp ex1 = (Exp)e1;
 	Exp ex2 = (Exp)e2;
+	parser.code.append("\t "+parser.assemblyOperation(op.toString())+" R1, "+ex1.code+", "+ex2.code+"\n");
 	RESULT = new Exp(parser.checkRelationalExp(ex1.type, ex2.type, (String)op), ex1.code + (String)op + ex2.code);
 :};
 
@@ -428,8 +455,12 @@ bin_arim_op ::= MOD {:
     RESULT = "mod";
 :};
 
-un_arim_op ::= PLUS;
-un_arim_op ::= MINUS;
+un_arim_op ::= PLUS{:
+	RESULT = "+";
+:};
+un_arim_op ::= MINUS{:
+	RESULT = "-";
+:};
 
 
 variable_def_part ::= VAR variable_def_list ;
