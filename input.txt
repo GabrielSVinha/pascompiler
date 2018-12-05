@@ -3,12 +3,16 @@ type
 d = (x, y, z);
 
 var
-   a, b: integer;
+   a, b, c, i: integer;
 
 begin
-   for a := 10 downto 20 do
+   for a := 10 to 20 do
 
    begin
+   	  for i := 10 downto 0 do
+   	  begin
+   	  	c := i;
+   	  end;
       b := a;
    end;
 end.

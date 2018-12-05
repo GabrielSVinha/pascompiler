@@ -19,6 +19,8 @@ parser code {:
   protected Lexer lexer;
   public static int errors = 0;
   public static StringBuffer code = new StringBuffer();
+  public int labels = 0;
+  public List<String> label_stack = new ArrayList();
 
   public void report_error(String message, Object info){
     if (info instanceof String){
@@ -185,11 +187,9 @@ precedence left DIVIDE;
 start with initial;
 /* The grammar rules */
 
-initial ::= program_def_part program_def {:
-	parser.code.append("\t HALT \n\n");
-:};
-program_def ::= type_def_part variable_def_part header_declarations body_def_part;
-program_def ::=  variable_def_part body_def_part;
+initial ::= program_def_part program_def;
+program_def ::= type_def_part variable_def_part header_declarations body_def_part {:parser.code.append("\t HALT\n");:};
+program_def ::=  variable_def_part body_def_part {:parser.code.append("\t HALT\n");:};
 
 program_def_part ::= PROGRAM identifier:id SEMI{:
 	parser.code.append("; Codigo assembly simples para "+id+".\n"); 
@@ -220,7 +220,7 @@ stmt ::= for_def_part;
 stmt ::= call;
 
 
-for_designator ::= FOR control_variable:cv equal_op initial_value:iv direction final_value:fv {:
+for_designator ::= FOR control_variable:cv equal_op initial_value:iv direction:dir final_value:fv {:
 	SymbolImpl symbolTableCV = SymbolTable.get(cv.toString());
 	if (symbolTableCV == null) {
 		parser.report_error("Undeclared variable ", "ERROR");
@@ -230,6 +230,12 @@ for_designator ::= FOR control_variable:cv equal_op initial_value:iv direction f
 	parser.checkEqualTypes(exIV.type, Type.getType("integer"));
 	parser.checkEqualTypes(exFV.type, Type.getType("integer"));
 	parser.checkEqualTypes(symbolTableCV.getType(), Type.getType("integer"));
+	List<String> res = new ArrayList();
+	res.add(cv.toString());
+	res.add(dir.toString());
+	res.add(exIV.code);
+	res.add(exFV.code);
+	RESULT = res;
 :};
 control_variable ::= identifier:id {:
 	RESULT = id.toString();
@@ -238,13 +244,33 @@ initial_value ::= exp_part:e {:
 	Exp exp = (Exp)e;
 	RESULT = exp;
 :};
-direction ::= TO | DOWNTO;
+direction ::= TO {:RESULT = "TO";:}| DOWNTO {:RESULT = "DOWNTO";:};
 final_value ::= exp_part:e {:
 	Exp exp = (Exp)e;
 	RESULT = exp;
 :};
 
-for_def_part ::= for_designator DO for_stmt ;
+for_def_part ::= for_designator:fd {:
+	List<String> l = (List<String>)fd;
+	parser.code.append("\t ST "+l.get(0)+", "+l.get(2)+"\n");
+	parser.code.append("L"+parser.labels+":");
+	parser.label_stack.add("L"+parser.labels);
+	parser.labels += 1;
+:} DO for_stmt {:
+	List<String> l = (List<String>)fd;
+	parser.code.append("\t LD R0, "+l.get(0)+"\n");
+	if(l.get(1).equals("TO")){
+		parser.code.append("\t ADD R0, R0, 1\n");
+		parser.code.append("\t ST "+l.get(0)+", R0\n");
+		parser.code.append("\t SUB R0, R0, "+l.get(3)+"\n");
+		parser.code.append("\t BLTZ "+parser.label_stack.remove(parser.label_stack.size()-1)+", R0\n");
+	} else {
+		parser.code.append("\t SUB R0, R0, 1\n");
+		parser.code.append("\t ST "+l.get(0)+", R0\n");
+		parser.code.append("\t SUB R0, R0, "+l.get(3)+"\n");
+		parser.code.append("\t BGTZ "+parser.label_stack.remove(parser.label_stack.size()-1)+", R0\n");
+	}
+:};
 for_stmt ::= block stmt_def_part block_end;
 for_stmt ::= stmt_def_part;
 for_def_part ::= error {:parser.report_error("Error in for definition ", "ERROR"); :};
