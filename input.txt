@@ -1,18 +1,25 @@
 program forLoop;
-type
-d = (x, y, z);
 
-var
-   a, b, c, i: integer;
+var a, b, i: integer;
+var c: string;
+
+(*x1, x2: integer*)
+
+function sum(x: integer): integer;
+begin
+   i := 4;
+   sum := 1;
+end;
+
+procedure example;
+begin
+   i := 1000;
+end;
+
+
 
 begin
-   for a := 10 to 20 do
-
-   begin
-   	  for i := 10 downto 0 do
-   	  begin
-   	  	c := i;
-   	  end;
-      b := a;
-   end;
+   a := 1;
+   example();
+   b := sum(a);
 end.

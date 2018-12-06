@@ -14,7 +14,9 @@ public class ProcedureType extends Type {
 	
 	
 	public void addParams(List<Type> type) {
-		this.parameters.addAll(type);
+		if (type != null) {
+			this.parameters.addAll(type);
+		}
 	}
 
 }

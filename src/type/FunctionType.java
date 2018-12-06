@@ -17,7 +17,7 @@ public class FunctionType extends Type {
 	}
 	
 	public String getVal() {
-		return this.val;
+		return this.returnType.val;
 	}
 	
 }

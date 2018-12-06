@@ -19,7 +19,9 @@ parser code {:
   protected Lexer lexer;
   public static int errors = 0;
   public static StringBuffer code = new StringBuffer();
+  public static List<StringBuffer> scopes = new ArrayList();
   public int labels = 0;
+  public StringBuffer mainScope = new StringBuffer();
   public List<String> label_stack = new ArrayList();
 
   public void report_error(String message, Object info){
@@ -48,7 +50,7 @@ parser code {:
   }
 
   public void checkCompatibleTypes(Type t1, Type t2){
-    if (t1.equals(t2)){return;}
+    if (t1.getVal().equals(t2.getVal())){return;}
     if (t1.getVal().equals("integer") && t2.getVal().equals("real")){return;}
     if (t2.getVal().equals("integer") && t1.getVal().equals("real")){return;}
     report_error("Incompatible types ", "ERROR");
@@ -155,6 +157,7 @@ non terminal String   	  identifier, for_stmt;
 non terminal              type_def, control_variable, for_def_part, initial_value, direction, for_designator;
 non terminal              attr, assign_operator, equal_op, sum_op, minus_op, times_op, divide_op, only_equal_op;
 /* Precedences */ 
+precedence nonassoc BEGIN;	// Inserted by Eclipse plugin
 precedence left FOR;	// Inserted by Eclipse plugin
 precedence nonassoc IDENTIFIER;	// Inserted by Eclipse plugin
 precedence nonassoc NOT;	// Inserted by Eclipse plugin
@@ -189,11 +192,11 @@ start with initial;
 
 initial ::= program_def_part program_def;
 program_def ::= type_def_part variable_def_part header_declarations body_def_part {:parser.code.append("\t HALT\n");:};
+program_def ::= variable_def_part header_declarations body_def_part {:parser.code.append("\t HALT\n");:};
 program_def ::=  variable_def_part body_def_part {:parser.code.append("\t HALT\n");:};
 
 program_def_part ::= PROGRAM identifier:id SEMI{:
 	parser.code.append("; Codigo assembly simples para "+id+".\n"); 
-	parser.code.append("; Os registradores R0...Rn sao argumentos de funcoes/procedimentos.\n");
 	parser.code.append("; O registrador V0 guarda retorno de funcoes.\n");
 	parser.code.append("; O registrador SP sala a pilha de execucao.\n\n"); 
 	parser.code.append("\t LD SP , #stackStart\n"); 
@@ -208,9 +211,7 @@ set_item ::= identifier;
 body_def_part ::= BEGIN  {:
 	parser.code.append("main: \n");
 :} stmt_def_part END FULLSTOP;
-body_def_part ::=  {:
-	parser.code.append("main: \n");
-:} stmt_def_part END FULLSTOP;
+
 
 stmt_def_part ::= stmt_def_list | ;
 stmt_def_list ::= stmt_def_list stmt;
@@ -286,7 +287,15 @@ header_declarations ::= header_declarations function_def_part;
 block ::= BEGIN;
 block_end ::= END SEMI;
 
-procedure_def_part ::= procedure_declaration variable_def_part procedure_body;
+procedure_def_part ::= procedure_declaration:pd {:
+	parser.mainScope = parser.code;
+	parser.code = new StringBuffer();
+	parser.code.append(pd.toString()+":\n");
+:} variable_def_part procedure_body {:
+	parser.code.append("\t BR *0(SP)\n");
+	parser.scopes.add(parser.code);
+	parser.code = parser.mainScope; 
+:};
 procedure_declaration ::= PROCEDURE identifier:id parameters_list:pl SEMI {:
 	ProcedureType p = new ProcedureType();
 	List<Type> l = (List<Type>)pl; 
@@ -294,10 +303,19 @@ procedure_declaration ::= PROCEDURE identifier:id parameters_list:pl SEMI {:
 	if (! SymbolTable.insert(id.toLowerCase(), new SymbolImpl(id, p))){
 		parser.report_error("Duplicate name ", "ERROR");
 	}
+	RESULT = id;
 :};
 procedure_body ::= block stmt_def_part block_end;
 
-function_def_part ::= function_declaration variable_def_part function_body;
+function_def_part ::= function_declaration:fd {:
+	parser.mainScope = parser.code;
+	parser.code = new StringBuffer();
+	parser.code.append(fd.toString()+":\n");
+:} variable_def_part function_body {:
+	parser.code.append("\t BR *0(SP)\n");
+	parser.scopes.add(parser.code);
+	parser.code = parser.mainScope; 
+:};
 function_declaration ::= FUNCTION identifier:id parameters_list:pl COLON type_def:td SEMI{:
 	Type returnType = (Type)td;
 	FunctionType p = new FunctionType(returnType);
@@ -306,6 +324,7 @@ function_declaration ::= FUNCTION identifier:id parameters_list:pl COLON type_de
 	if (! SymbolTable.insert(id.toLowerCase(), new SymbolImpl(id, p))){
 		parser.report_error("Duplicate name ", "ERROR");
 	}
+	RESULT = id;
 :};
 function_body ::= block stmt_def_part block_end;
 
@@ -331,6 +350,7 @@ parameters ::= parameter:p SEMI parameters:pl {:
 parameters ::= parameter:p {:
 	RESULT = p;
 :};
+parameters ::= ;
 
 call ::= identifier:id LPAREN args:al RPAREN SEMI {:
 	SymbolImpl s = SymbolTable.get(id);	
@@ -338,13 +358,36 @@ call ::= identifier:id LPAREN args:al RPAREN SEMI {:
 		parser.report_error("Undeclared function ", "ERROR");
 	}
 	List<Exp> arg_list = (List<Exp>)al;
-	FunctionType f = (FunctionType)s.getType();
-	for (int i=0; i < f.parameters.size(); i++){
-		if (f.parameters.get(i) != arg_list.get(i).type){
-			parser.report_error("Invalid parameter ", "ERROR");
+	try{
+		FunctionType f = (FunctionType)s.getType();
+		for (int i=0; i < f.parameters.size(); i++){
+			if (f.parameters.get(i) != arg_list.get(i).type){
+				parser.report_error("Invalid parameter ", "ERROR");
+			}
 		}
+		int lines = 0;
+		for (StringBuffer buffer: parser.scopes) {
+			lines += buffer.toString().split("\n").length;
+		}
+		lines += parser.mainScope.toString().split("\n").length;
+		parser.code.append("\t ADD SP, SP, #"+id.toString()+".size\n");
+		parser.code.append("\t ST *SP, "+lines+"\n");
+		parser.code.append("\t BR "+id.toString()+"\n");
+		parser.code.append("\t SUB SP, SP, #"+id.toString()+".size\n");
+		RESULT = f;
+	} catch (ClassCastException e){
+		ProcedureType f = (ProcedureType)s.getType();
+		for (int i=0; i < f.parameters.size(); i++){
+			if (f.parameters.get(i) != arg_list.get(i).type){
+				parser.report_error("Invalid parameter ", "ERROR");
+			}
+		}
+		parser.code.append("\t ADD SP, SP, #"+id.toString()+".size\n");
+		parser.code.append("\t ST *SP, "+(parser.scopes.size()+16)+"\n");
+		parser.code.append("\t BR "+id.toString()+"\n");
+		parser.code.append("\t SUB SP, SP, #"+id.toString()+".size\n");
+		RESULT = f;
 	}
-	RESULT = f;
 :};
 args ::= exp:ex {:
 	List<Exp> a = new ArrayList();
@@ -358,6 +401,7 @@ args ::= args:a COMMA exp:ex {:
 	arg_list.add(e);
 	RESULT = arg_list;
 :};
+args ::= ;
 
 exp_part ::= exp:ex {:
 	Exp e = (Exp)ex;
@@ -489,7 +533,7 @@ un_arim_op ::= MINUS{:
 :};
 
 
-variable_def_part ::= VAR variable_def_list ;
+variable_def_part ::= VAR variable_def_list variable_def_part;
 variable_def_list ::= variable_def_list variable_def | variable_def;
 variable_def ::= identifier_list:il COLON type_def:td SEMI {:
 	for (String id: il){
@@ -503,7 +547,11 @@ variable_def ::= error {: parser.report_error("","expected ';' before token"); :
 attr ::= identifier:id assign_operator exp_part:ex SEMI{:
 	Exp e = (Exp)ex;
     parser.checkCompatibleTypes(SymbolTable.get(id).getType(), e.type);
-	parser.code.append("\t ST "+id+", "+e.code+"\n");
+	if (SymbolTable.get(id).getType() instanceof FunctionType){
+		parser.code.append("\t ADD V0, "+e.code+", 0\n");
+	} else {
+		parser.code.append("\t ST "+id+", "+e.code+"\n");
+	}
 :};
 attr ::= identifier:id assign_operator call:c {:
 	SymbolImpl s = SymbolTable.get(id.toLowerCase());
@@ -512,7 +560,7 @@ attr ::= identifier:id assign_operator call:c {:
 	}
 	FunctionType f = (FunctionType)c;
 	parser.checkCompatibleTypes(s.getType(), f.returnType);
-	
+	parser.code.append("\t ST "+id.toString()+", V0\n");
 :};
 attr ::= identifier assign_operator error {: 
 	parser.report_error("Error in expression ", "ERROR"); 
@@ -561,7 +609,7 @@ type_def ::= REAL {:
  // After this the order of productions matters
 
 //Moved by CUP Eclipse plugin
-header_declarations ::= ;
+
 
 //Moved by CUP Eclipse plugin
 variable_def_part ::= ;
@@ -575,3 +623,11 @@ literal ::= FLOAT_LITERAL:rl {:
 literal ::= FLOAT_LITERAL:fl {:
 	RESULT = fl;
 :};
+
+//Moved by CUP Eclipse plugin
+body_def_part ::=  {:
+	parser.code.append("main: \n");
+:} stmt_def_part END FULLSTOP;
+
+//Moved by CUP Eclipse plugin
+header_declarations ::= ;
